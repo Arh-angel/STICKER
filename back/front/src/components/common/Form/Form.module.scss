@@ -1,0 +1,30 @@
+@import '../../../assets/style/vars.scss';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: calc(288px + (364 - 288) * ((100vw - 320px) / (1920 - 320)));
+  min-height: 584px;
+  align-items: center;
+  margin-top: calc(24px + (40 - 24) * ((100vw - 320px) / (1920 - 320)));
+  margin-bottom: calc(16px + (264 - 16) * ((100vw - 320px) / (1920 - 320)));
+  padding: 24px;
+  background-color: $second-main-color;
+
+  &__title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  &__supTitle {
+    line-height: 1.5;
+    color: #2a2f377c;
+  }
+  &__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+  }
+}

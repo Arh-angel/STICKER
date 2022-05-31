@@ -1,0 +1,80 @@
+@import '../../../assets/style/vars.scss';
+
+.dropDownMenuContainer {
+  width: auto;
+  height: auto;
+  position: relative;
+
+
+  & > .dropDownMenuBtn {
+    display: flex;
+    align-items: center;
+    margin: 0;
+
+    & > .dropDownMenuBtnText {
+      margin-left: 8px;
+    }
+  }
+
+  & > .dropDownMenu {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 0;
+    width: 267px;
+
+    & > ul {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      background-color: $second-main-color;
+      border-radius: 4px;
+      box-shadow: 0 2px 12px 0 #00000010;
+      margin-top: 26px;
+
+       & > li {
+        list-style: none;
+        border-bottom: 1px solid #342b2b33;
+  
+        & > a {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          padding: 24px;
+  
+          & > .dropDownMenuFoto {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #E5E5E5;
+          }
+  
+          & > .dropDownMenuText {
+            margin-left: 16px;
+          }
+  
+          & > .dropDownMenuName {
+            font-weight: 700;
+          }
+  
+          &:hover {
+            color: $title-color;
+          }
+        }
+        
+        &:hover {
+          background-color: #2c2d2e0a;
+        }
+
+        &:last-child {
+          border: none;
+        }
+      }
+    }
+  }
+
+  &:hover > .dropDownMenu {
+      display: flex;
+  }
+}

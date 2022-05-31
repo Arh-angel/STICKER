@@ -1,0 +1,33 @@
+.publishMenuContainer {
+  max-width: 242px;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(44, 45, 46, 0.08);
+  z-index: 1;
+
+  & > .publishMenuList {
+
+    & .publishMenuitem {
+      list-style: none;
+      border-bottom: 1px solid #342b2b33;
+
+      & > a {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 8px 24px;
+
+        & > svg {
+          margin-right: 12px;
+        }
+      }
+
+      &:hover {
+        background-color: rgba(44, 45, 46, 0.04);
+
+        & > a > svg > path {
+          stroke: #1D1D1D;
+        }
+      }
+    }
+  }
+}

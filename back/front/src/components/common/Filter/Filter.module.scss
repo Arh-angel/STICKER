@@ -1,0 +1,47 @@
+@import '../../../assets/style/vars.scss';
+
+.filterContainer {
+  padding: 24px;
+  border: 1px solid rgba(44, 45, 46, 0.08);
+
+  & > div > div {
+    & > .filterTitle {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 24px;
+      margin-bottom: 24px;
+    }
+
+    & > div {
+      margin-bottom: 16px;
+
+      &:last-child {
+        margin-bottom: 24px;
+      }
+    }
+  }
+
+  & > .filterWrapperCheckbox {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    & > .filterCategory {
+      margin-right: 24px;
+    }
+  }
+  & > .filterBtn {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    & > button {
+      margin-right: 24px;
+
+      &:last-child {
+        color: $sub-color-two;
+        border: 1px solid $sub-color-two;
+      }
+    }
+  }
+}

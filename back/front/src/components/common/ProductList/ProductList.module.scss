@@ -1,0 +1,39 @@
+@import '../../../assets/style/main.scss';
+@import '../../../assets/style/vars.scss';
+
+.container {
+  & > .title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px;
+    color: $title-color;
+    margin-bottom: 40px;
+  }
+
+  & > .wrapperList {
+    width: 100%;
+    margin-bottom: 40px;
+
+    & > .list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: calc(24px + (40 - 24) * ((100vw - 768px) / (1920 - 768)));
+    }
+  }
+
+  & > .BtnLoadMore {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+
+    & >button {
+      flex-direction: row-reverse;
+      border: 1px solid $sub-color-two;
+  
+      & > svg {
+        margin-right: 12px;
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+@import '../../../../../assets/style/main.scss';
+@import '../../../../../assets/style/vars.scss';
+
+.container {
+  width: calc(300px + (303 - 300) * ((100vw - 768px) / (1920 - 768)));
+  background-color: transparent;
+  border-radius: 0;
+  list-style: none;
+  overflow: hidden;
+
+  &:hover {
+    border-radius: 4px;
+    outline: 3px solid #FFAC28;
+    box-shadow: 0 8px 36px 0 rgba(42, 47, 55, 0.06);
+  }
+
+  & > a {
+    &:hover {
+      color: $title-color;
+    }
+
+    & > .itemImg {
+
+      & > img {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    & > .textBlock {
+      padding-top: 24px;
+
+      & > .itemTitle {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+      }
+
+      & > .itemBrand {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+        color: $title-color;
+      }
+    }
+  }
+}

@@ -1,0 +1,100 @@
+@import '../../../assets/style/vars.scss';
+@import '../../../assets/style/main.scss';
+
+aside > .asideMenuContainer {
+  width: auto;
+  height: auto;
+
+  & > .asideMenu {
+    display:flex;
+    width: 263px;
+    background-color: $second-main-color;
+
+    & > ul {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+       & > li {
+        list-style: none;
+        border-bottom: 1px solid #342b2b33;
+  
+        & > a {
+          position: relative;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          margin: 24px;
+
+          &.openLink {
+            color: $sub-color-two;
+
+            & > svg path{
+              stroke: $sub-color-two;
+            }
+            
+            & > .asideMenuLineActiveLink {
+              position: absolute;
+              left: -24px;
+              top: 0;
+              transform: translate(0,-25%);
+              height: 40px;
+              width: 2px;
+              background-color:  $sub-color-two;
+            }
+          }
+
+          &:hover > .asideMenuLineActiveLink {
+            position: absolute;
+            left: -24px;
+            top: 0;
+            transform: translate(0,-25%);
+            height: 40px;
+            width: 2px;
+            background-color:  $sub-color-two;
+          }
+  
+          & > .asideMenuFoto {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #E5E5E5;
+          }
+  
+          & > .asideMenuText {
+            margin-left: 16px;
+          }
+
+          & > .asideMenuNameStatus {
+            display: flex;
+            flex-direction: column;
+            margin-left: 16px;
+
+            & > .asideMenuName {
+              font-weight: 700;
+              line-height: 24px;
+            }
+  
+            & > .asideMenuSubText {
+              font-size: 12px;
+              color: $text-color;
+              line-height: 16px;
+            }
+          }
+  
+          &:hover {
+            color: $sub-color-two;
+
+            & > svg path{
+              stroke: $sub-color-two;
+            }
+          }
+        }
+
+        &:last-child {
+          border: none;
+        }
+      }
+    }
+  }
+}

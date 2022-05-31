@@ -1,0 +1,53 @@
+@import '../../../assets/style/main.scss';
+@import '../../../assets/style/vars.scss';
+
+.banner {
+  width: 100%;
+  // height: calc(260px + (544 - 260) * ((100vw - 320px) / (1920 - 320)));
+  background-color: $second-main-color;
+
+   & > .container > .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    margin-top: -100px;
+    
+  
+    & > .text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      width: calc(223px + (464 - 223) * ((100vw - 320px) / (1920 - 320)));
+      flex-shrink: 0;
+  
+      & > .title {
+        font-size: calc(24px + (48 - 24) * ((100vw - 320px) / (1920 - 320)));
+        font-weight: 700;
+        margin-bottom: calc(32px + (40 - 32) * ((100vw - 320px) / (1920 - 320)));
+        color: $title-color;
+      }
+      & > .paragraph {
+        font-size: 16px;
+        line-height: 1.8;
+        color: #424242;
+      }
+    }
+  
+    & > .img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: calc(0px + (100 - 0) * ((100vw - 768px) / (1920 - 768)));
+      width: 100%;
+      
+      & > img {
+        display: block;
+        // width: calc(132px + (717 - 132) * ((100vw - 320px) / (1920 - 320)));
+        width: 100%;
+      }
+    }
+  }
+}
+

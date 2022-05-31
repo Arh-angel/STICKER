@@ -1,0 +1,53 @@
+@import '../../../../../assets/style/vars.scss';
+
+.container {
+  position: relative;
+  width: 50%;
+  margin-right: 24px;
+
+  & > p {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    color: #2A2F37;
+    opacity: 0.6;
+  }
+
+  & > button {
+    justify-content: space-between;
+    border: 1px solid rgba(42, 47, 55, 0.08);
+  }
+
+  & > .select {
+    position: absolute;
+    top: 96px;
+    left: 0;
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(42, 47, 55, 0.08);
+    z-index: 1;
+
+    & > li {
+      padding: 20px 24px;
+      list-style: none;
+      border-bottom: 1px solid #342b2b33;
+
+      &:last-child {
+        border: 0;
+      }
+
+      &:hover {
+        background-color: rgba(44, 45, 46, 0.04);
+        font-weight: 700;
+      }
+    }
+  }
+
+  & > svg {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 24px;
+  }
+}

@@ -1,0 +1,52 @@
+@import '../../../assets/style/vars.scss';
+@import '../../../assets/style/main.scss';
+
+.productItem {
+  display: grid;
+  grid-template-columns: 1fr 0.5fr 0.5fr 0.3fr 0.2fr;
+  align-items: center;
+  height: 80px;
+
+  & > p {
+    font-size: 14px;
+    line-height: 24px;
+
+    &:first-child {
+      padding-left: 24px;
+      font-weight: 700;
+    }
+  }
+
+  & > button {
+    padding: 0;
+    margin-right: 24px;
+    opacity: .4;
+  }
+
+  &:hover {
+    border-radius: 4px;
+    border: 1px solid rgba(72, 119, 242, 0.5);
+    box-shadow: 0 8px 36px 0 rgba(33, 33, 33, 0.06);
+  }
+
+  & > .productItemBtnWrapper {
+    position: relative;
+    margin-right: 24px;
+
+    & > button {
+      border-radius: 0;
+      padding: 4px;
+      margin: 0;
+    }
+
+    & > div {
+      position: absolute;
+      right: 0;
+      top: 32px;
+
+      & > ul > li:last-child {
+        border: 0;
+      }
+    }
+  }
+}

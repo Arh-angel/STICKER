@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap');
+
+//colors
+$main-color: rgba(42, 47, 55, 0.02);
+$second-main-color: #FFFFFF;
+$sub-color: #FFAC28;
+$sub-color-two: #3A95FF;
+$title-color: #1D1D1D;
+$text-color: #2A2F37;
+$text-color-lite-grey: #2a2f377c;
+$link-blue-text-color: #F2F2F2;
+$link-yellow-text-color: #2C2D2E;
+$button-yellow-color: #FFAC28;
+$button-blue-color: #4877F2;
+
+//fonts
+$title: 'Jost', sans-serif;
+$text: 'Jost', sans-serif;
+
+//vars
+$title-size: calc(18px + (24 - 18) * ((100vw - 320px) / (1920 - 320)));
+$text-size: 14px;

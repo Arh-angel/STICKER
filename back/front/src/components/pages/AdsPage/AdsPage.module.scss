@@ -1,0 +1,127 @@
+@import '../../../assets/style/vars.scss';
+@import '../../../assets/style/main.scss';
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 40px;
+
+  & > .ads {
+    width: 100%;
+    margin-left: 40px;
+    margin-bottom: 248px;
+
+    & > .adsHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      max-width: 100%;
+      padding-bottom: 32px;
+      border-bottom: 1px solid #342b2b33;
+      margin-bottom: 24px;
+
+      & > .adsHeaderText {
+        & > .adsHeaderTitle {
+          font-size: 24px;
+          font-weight: 700;
+          line-height: 32px;
+        }
+        & > .adsHeaderSubTitle {
+          display: flex;
+          align-items: center;
+          line-height: 24px;
+        }
+      }
+      & > button {
+        justify-content: space-between;
+      }
+  }
+  & > .searchContainer {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    & > .searchInput {
+      position: relative;
+      & > input {
+        width:calc(286px + (420 - 286) * ((100vw - 768px) / (1920 - 768)));
+        height: calc(36px + (40 - 36) * ((100vw - 768px) / (1920 - 768)));
+        padding-left: 16px;
+        border: none;
+        
+        &:focus {
+          border: none;
+          outline: none;
+        }
+      }
+      & > .searchInputLoupe {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translate(0, -45%);
+      }
+    }
+    & > .searchBtnWrapper {
+      position: relative;
+
+      & > button {
+        justify-content: space-between;
+      }
+      & > div {
+        position: absolute;
+        top: 48px;
+        right: 16px;
+        z-index: 1;
+        background-color: #FFFFFF;
+      }
+    }
+    & > .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      & > .text {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 72px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 24px;
+        color: $title-color;
+        margin-right: 16px;
+      }
+    }
+  }
+  & > .aboutAds {
+    display: grid;
+    grid-template-columns: 1fr 0.5fr 0.5fr 0.3fr 0.2fr;
+    background-color: #FFFFFF;
+    margin-bottom: 8px;
+
+    & > button {
+      justify-content: flex-start;
+      opacity: .6;
+      line-height: 16px;
+      padding-left: 24px;
+    }
+
+    & > .aboutAdsTitle {
+      justify-content: flex-start;
+      font-size: 12px;
+      align-self: center;
+      font-weight: 700;
+      color: #1D1D1D;
+      opacity: .6;
+      line-height: 16px;
+    }
+  }
+  & > .wrapperProductList {
+    width: 100%;
+    background-color: #FFFFFF;
+  }
+  } 
+}
