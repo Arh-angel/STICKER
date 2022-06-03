@@ -3,7 +3,7 @@ import style from './Button.module.scss';
 
 type ButtonPropsType = {
   title: string | null;
-  handler: () => void | null;
+  handler: () => Promise<void> | void | null;
   width: string | null;
   height: string | null;
   background: string | null;

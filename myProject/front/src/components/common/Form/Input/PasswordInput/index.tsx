@@ -51,7 +51,7 @@ const PasswordInput = ({
 
   useEffect(() => {
     if (currentValue.length > 0) {
-      if (!currentValue.match(regPas) || (!pasMatch && pasMatch !== null)) {
+      if (!currentValue.match(regPas) || (!pasMatch && pasMatch !== null) || currentValue.length < 8) {
         setValid(false);
         dispatch(authorizationErrorStatus(true));
       } else {

@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV==='dev' tsnd src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "NODE_ENV==='dev' tsnd src/index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +23,7 @@
     "@hapi/inert": "^6.0.5",
     "@hapi/vision": "^6.1.0",
     "hapi-swagger": "^14.5.1",
-    "joi": "^17.6.0"
+    "joi": "^17.6.0",
+    "mongoose": "^6.3.5"
   }
 }

@@ -1,11 +1,12 @@
 import * as hapi from '@hapi/hapi';
 import * as joi from 'joi';
+import mongoose, { Schema } from 'mongoose';
 import * as ads from './lib/ads';
-import * as users from './lib/users';
+import { User } from './lib/users';
 
 export default [
   {
-    method: 'PUT',
+    method: 'POST',
     path: '/users',
     options: {
       description: 'create user',
@@ -15,13 +16,18 @@ export default [
            lastName: joi.string().required(),
            email: joi.string().required(),
            password: joi.string().required(),
-           age: joi.number().required().min(18).max(100),
+           age: joi.number().min(18).max(100),
          }),
       }
     },
-    handler: (req: hapi.Request) => {
+    handler: async (req: hapi.Request) => {
       const body = req.payload as any;
-      users.createUser(body);
+      const newUser = await new User({ name: body.name, lastName: body.lastName, email: body.email, password: body.password, age: body.age, role: 'user'});
+      await newUser.save((err) => {
+        if (err) throw err;
+     
+        console.log('User successfully saved.');
+      });
       return 'ok';
     }
   },
@@ -29,15 +35,23 @@ export default [
     method: 'GET',
     path: '/users',
     handler: () => {
-      return users.getUsers();
+      // return users.getUsers();
     }
   },
   {
     method: 'GET',
     path: '/users/{id}',
-    handler: (req: hapi.Request) => {
-      return users.getUser(req.params.id);
-    }
+    handler: async (req: hapi.Request) => {
+      const user = await User.findById(req.params.id, (err, user) => {
+          if (err) {
+            console.log(err.message)
+          } 
+          console.log(user)
+          return user
+        });
+
+        return user
+      }
   },
   {
     method: 'PATCH',
@@ -55,7 +69,7 @@ export default [
       },
     },
     handler: (req: hapi.Request) => {
-      users.changeUser(req.params.id, req.payload);
+      // users.changeUser(req.params.id, req.payload);
       return 'ok';
     }
   },
@@ -63,7 +77,7 @@ export default [
     method: 'DELETE',
     path: '/users/{id}',
     handler: (req: hapi.Request) => {
-      users.deleteUser(req.params.id);
+      // users.deleteUser(req.params.id);
       return 'ok'
     }
   },

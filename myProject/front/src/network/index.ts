@@ -7,7 +7,7 @@ const makeRequest = async ({ url, method = 'GET', data = {}, params = {} }: Axio
       url,
       data,
       params,
-      baseURL: 'https://rickandmortyapi.com/api',
+      baseURL: 'http://localhost:3000/',
       timeout: 10000
     });
 

@@ -3,13 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import RegistrationPage from '../../components/pages/RegistrationPage';
 
-import { selectUserAuthorized, selectUserEmail, selectUserFirstName, selectUserLastName, selectUserPassword, selectUserRegistered, userAuthorized, userRegistered, selectAgreementStatus } from '../../store/slice/userSlice/userSlice';
+import { selectUserAuthorized, selectUserEmail, selectUserFirstName, selectUserLastName, selectUserPassword, selectUserRegistered, userAuthorized, userRegistered, selectAgreementStatus, authorizationErrorStatus } from '../../store/slice/userSlice/userSlice';
+import makeRequest from '../../network';
 
 const RegistrationContainer = () => {
   const [pass, setPass] = useState('');
   const [repeatPass, setRepeatPass] = useState('');
 
   const [pasMatch, setPasMatch] = useState(false);
+
+  const [erMessage, setErMessage] = useState('');
 
   const userName = useAppSelector(selectUserFirstName);
   const userLastName = useAppSelector(selectUserLastName);
@@ -20,8 +23,6 @@ const RegistrationContainer = () => {
   const userAgreement = useAppSelector(selectAgreementStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  console.log(pass, repeatPass, pasMatch);
 
   const trackPas = (value:string) => {
     setPass(value);
@@ -43,17 +44,22 @@ const RegistrationContainer = () => {
     }
   }, [pass, repeatPass]);
 
-  const setUserRegistered = () => {
+  const setUserRegistered = async () => {
     if (userName && userLastName && userEmail && userPassword && userAgreement) {
+      // const responseServer = await makeRequest({ url: '/users', method: 'POST', data: { name: userName, lastName: userLastName, email: userEmail, password: userPassword } });
+
       dispatch(userRegistered(true));
       dispatch(userAuthorized(true));
       navigate('/', { state: { userReg } });
+    } else {
+      setErMessage('Заполните обязательные поля');
+      dispatch(authorizationErrorStatus(true));
     }
   };
 
   return (
     // eslint-disable-next-line max-len
-    <RegistrationPage handler={setUserRegistered} trackPas={trackPas} trackRepeatPas={trackRepeatPas} pasMatch={pasMatch} />
+    <RegistrationPage handler={setUserRegistered} trackPas={trackPas} trackRepeatPas={trackRepeatPas} pasMatch={pasMatch} erMessage={erMessage} />
   );
 };
 

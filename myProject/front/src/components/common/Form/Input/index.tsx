@@ -37,14 +37,13 @@ const Input = ({
 
   useEffect(() => {
     if (currentValue.length > 0) {
-      if ((id === 'name' || id === 'lastName') && currentValue.length < 2) {
+      if ((id === 'name' || id === 'lastName') && (currentValue.length < 2 || currentValue.length > 25)) {
         setValid(false);
         dispatch(authorizationErrorStatus(true));
       } else if (id === 'age' && +currentValue < 16 && +currentValue > 100) {
         setValid(false);
         dispatch(authorizationErrorStatus(true));
       } else if (id === 'email' && !currentValue.match(regEmail)) {
-        console.log(currentValue);
         setValid(false);
         dispatch(authorizationErrorStatus(true));
       } else {
