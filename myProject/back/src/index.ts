@@ -15,6 +15,9 @@ mongoose.connect('mongodb://localhost:27017/STICKER').then(() => {
 const srv = hapi.server({
   port: 3001,
   routes: {
+    cors: {
+      origin: ['*']
+    },
     files: {
       relativeTo: './data'
     }

@@ -41,8 +41,8 @@ export default [
   {
     method: 'GET',
     path: '/users/{id}',
-    handler: async (req: hapi.Request) => {
-      const user = await User.findById(req.params.id, (err, user) => {
+    handler: (req: hapi.Request) => {
+      const user = User.findById(req.params.id, (err, user) => {
           if (err) {
             console.log(err.message)
           } 

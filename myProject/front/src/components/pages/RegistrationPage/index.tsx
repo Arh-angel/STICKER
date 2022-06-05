@@ -26,14 +26,18 @@ const RegistrationPage = (props: RegistrationPageType) => {
     setErMas(erMessage);
   }, [erMessage]);
 
+  const handlerErMessage = (value:string) => {
+    setErMas(value);
+  };
+
   return (
     <Form title="Hello, world!" supTitle="Создайте аккаунт">
       <ButtonAuthReg />
-      <Input id="name" placeholder="Имя" type="text" writeEmail={() => null} />
-      <Input id="lastName" placeholder="Фамилия" type="text" writeEmail={() => null} />
-      <Input id="email" placeholder="Email" type="text" writeEmail={() => null} />
-      <PasswordInput id="password" placeholder="Пароль" type="password" trackPas={trackPas} trackRepeatPas={trackRepeatPas} pasMatch={pasMatch} writePassword={() => null} />
-      <PasswordInput id="repeatPassword" placeholder="Повторите пароль" type="password" trackPas={trackPas} trackRepeatPas={trackRepeatPas} pasMatch={pasMatch} writePassword={() => null} />
+      <Input id="name" placeholder="Имя" type="text" writeEmail={() => null} handlerErMessage={handlerErMessage} />
+      <Input id="lastName" placeholder="Фамилия" type="text" writeEmail={() => null} handlerErMessage={handlerErMessage} />
+      <Input id="email" placeholder="Email" type="text" writeEmail={() => null} handlerErMessage={handlerErMessage} />
+      <PasswordInput id="password" placeholder="Пароль" type="password" trackPas={trackPas} trackRepeatPas={trackRepeatPas} pasMatch={pasMatch} writePassword={() => null} handlerErMessage={handlerErMessage} />
+      <PasswordInput id="repeatPassword" placeholder="Повторите пароль" type="password" trackPas={trackPas} trackRepeatPas={trackRepeatPas} pasMatch={pasMatch} writePassword={() => null} handlerErMessage={handlerErMessage} />
       <Checkbox text="Принимаю условия" textLink="Пользовательского соглашения" checked />
       {erMas ? <span className={style.erMas}>{erMas}</span> : ''}
       <Button title="Создать аккаунт" handler={handler} width="100%" height="48px" background={null} textColor={null} fontSize={null} fontWeight={null} margin="24px 0 0 0" borderRadius={null} icon={null} />

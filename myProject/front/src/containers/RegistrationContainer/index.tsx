@@ -45,15 +45,14 @@ const RegistrationContainer = () => {
   }, [pass, repeatPass]);
 
   const setUserRegistered = async () => {
-    if (userName && userLastName && userEmail && userPassword && userAgreement) {
+    if (userName && userLastName && userEmail && userPassword && userAgreement && pasMatch) {
       // const responseServer = await makeRequest({ url: '/users', method: 'POST', data: { name: userName, lastName: userLastName, email: userEmail, password: userPassword } });
-
+      setErMessage('');
       dispatch(userRegistered(true));
       dispatch(userAuthorized(true));
       navigate('/', { state: { userReg } });
     } else {
       setErMessage('Заполните обязательные поля');
-      dispatch(authorizationErrorStatus(true));
     }
   };
 

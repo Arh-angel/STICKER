@@ -8,6 +8,7 @@ export interface UserState {
   email: string,
   password: string, // временно, нужно настроить валидацию формы
   agreement: boolean,
+  userRole: string,
   userRegistered: boolean,
   userAuthorized: boolean,
   authorizationErrorStatus: boolean,
@@ -20,6 +21,7 @@ const initialState: UserState = {
   email: '',
   password: '',
   agreement: true,
+  userRole: '',
   userRegistered: false,
   userAuthorized: false,
   authorizationErrorStatus: false,
@@ -47,6 +49,9 @@ export const userSlice = createSlice({
     addAgreementStatus: (state, action: PayloadAction<boolean>) => {
       state.agreement = action.payload;
     },
+    addUserRole: (state, action: PayloadAction<string>) => {
+      state.userRole = action.payload;
+    },
     userRegistered: (state, action: PayloadAction<boolean>) => {
       state.userRegistered = action.payload;
     },
@@ -70,5 +75,6 @@ export const selectUserRegistered = (state: RootState) => state.user.userRegiste
 export const selectUserAuthorized = (state: RootState) => state.user.userAuthorized;
 export const selectAuthorizationErrorStatus = (state: RootState) => state.user.authorizationErrorStatus;
 export const selectAgreementStatus = (state: RootState) => state.user.agreement;
+export const selectUserRole = (state: RootState) => state.user.userRole;
 
 export default userSlice.reducer;
