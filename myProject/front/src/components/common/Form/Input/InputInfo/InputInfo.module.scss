@@ -37,7 +37,7 @@
       }
 
       &.notValid {
-        border: 1px solid #D50000;
+        border: 1px solid #FF7765;
       }
     }
     & > .textError {
@@ -45,5 +45,6 @@
       font-weight: 400;
       color: #FF7765;
       font-size: 12px;
+      opacity: 1;
     }
 }

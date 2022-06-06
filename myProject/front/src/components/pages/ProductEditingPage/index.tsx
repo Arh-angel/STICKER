@@ -14,6 +14,7 @@ import style from './ProductEditingPage.module.scss';
 import Form from '../../common/Form';
 import InputInfo from '../../common/Form/Input/InputInfo';
 import Map from '../../common/Map';
+import Textarea from '../../common/Form/Input/Textarea';
 
 type ProductEditingPageProps = {
   handlerBtnBack: () => void
@@ -62,10 +63,7 @@ const ProductEditingPage = (props: ProductEditingPageProps) => {
               <InputInfo title="Телефон" id="tel" placeholder="+7 (_ _ _) _ _ _ - _ _ - _ _" type="text" />
             </div>
           </div>
-          <div className={style.productEditingBlockDescription}>
-            <p>Описание</p>
-            <textarea name="description" id="description" placeholder="Введите текст (до 3000 символов)" />
-          </div>
+          <Textarea placeholder="Введите текст (до 3000 символов)" />
           <div className={style.productEditingBlockAddFile}>
             <p>Фотография</p>
             <div className={style.productEditingBlockAddFileWrapper}>
