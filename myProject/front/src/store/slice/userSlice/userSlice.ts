@@ -1,20 +1,66 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AxiosResponse } from 'axios';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IUser } from '../../../models/IUser';
 import { RootState } from '../../store';
+import AuthService from '../../../services/AuthService';
+import { AuthResponse } from '../../../models/response/AuthResponse';
+import apiAxios from '../../../network';
 
+export const registration = createAsyncThunk(
+  'user/registration',
+  // eslint-disable-next-line consistent-return
+  async (userData: any, { rejectWithValue }) => {
+    try {
+      const { name, lastName, email, password } = userData;
+      const response = await AuthService.registration(name, lastName, email, password);
+
+      console.log(response.data);
+
+      localStorage.setItem('accessToken', response.data.accessToken);
+      return response.data.user;
+    } catch (e:any) {
+      rejectWithValue(e.response.data);
+    }
+  }
+);
+
+export const login = createAsyncThunk(
+  'user/login',
+  // eslint-disable-next-line consistent-return
+  async (userData: any, { rejectWithValue }) => {
+    try {
+      const { email, password } = userData;
+      const response = await AuthService.login(email, password);
+      return response.data.user;
+    } catch (e:any) {
+      rejectWithValue(e.response.data);
+    }
+  }
+);
 export interface UserState {
-  firstName: string,
-  lastName: string,
-  age: string,
-  email: string,
-  password: string, // временно, нужно настроить валидацию формы
-  agreement: boolean,
-  userRole: string,
-  userRegistered: boolean,
-  userAuthorized: boolean,
-  authorizationErrorStatus: boolean,
+  user: IUser,
+  status: string | null;
+  error: string | null;
+  firstName: string;
+  lastName: string;
+  age: string;
+  email: string;
+  password: string; // временно, нужно настроить валидацию формы
+  agreement: boolean;
+  userRole: string;
+  userRegistered: boolean;
+  userAuthorized: boolean;
+  authorizationErrorStatus: boolean
 }
 
 const initialState: UserState = {
+  user: {
+    id: '',
+    email: '',
+    isActivated: false
+  },
+  status: null,
+  error: null,
   firstName: '',
   lastName: '',
   age: '',
@@ -24,7 +70,7 @@ const initialState: UserState = {
   userRole: '',
   userRegistered: false,
   userAuthorized: false,
-  authorizationErrorStatus: false,
+  authorizationErrorStatus: false
 };
 
 export const userSlice = createSlice({
@@ -61,6 +107,20 @@ export const userSlice = createSlice({
     authorizationErrorStatus: (state, action: PayloadAction<boolean>) => {
       state.authorizationErrorStatus = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(registration.fulfilled, (state, action) => {
+      state.user = {
+        ...state.user,
+        ...action.payload
+      };
+    });
+    builder.addCase(login.fulfilled, (state, action) => {
+      state.user = {
+        ...state.user,
+        ...action.payload
+      };
+    });
   },
 });
 

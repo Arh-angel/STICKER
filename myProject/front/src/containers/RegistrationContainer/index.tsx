@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import RegistrationPage from '../../components/pages/RegistrationPage';
 
-import { selectUserAuthorized, selectUserEmail, selectUserFirstName, selectUserLastName, selectUserPassword, selectUserRegistered, userAuthorized, userRegistered, selectAgreementStatus, authorizationErrorStatus } from '../../store/slice/userSlice/userSlice';
+import { selectUserAuthorized, selectUserEmail, selectUserFirstName, selectUserLastName, selectUserPassword, selectUserRegistered, userAuthorized, userRegistered, selectAgreementStatus, authorizationErrorStatus, registration } from '../../store/slice/userSlice/userSlice';
 import makeRequest from '../../network';
 
 const RegistrationContainer = () => {
@@ -46,10 +46,10 @@ const RegistrationContainer = () => {
 
   const setUserRegistered = async () => {
     if (userName && userLastName && userEmail && userPassword && userAgreement && pasMatch) {
-      // const responseServer = await makeRequest({ url: '/users', method: 'POST', data: { name: userName, lastName: userLastName, email: userEmail, password: userPassword } });
       setErMessage('');
       dispatch(userRegistered(true));
       dispatch(userAuthorized(true));
+      dispatch(registration({ userName, userLastName, userEmail, userPassword }));
       navigate('/', { state: { userReg } });
     } else {
       setErMessage('Заполните обязательные поля');
