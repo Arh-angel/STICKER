@@ -38,7 +38,7 @@ const Checkbox = (props: CheckboxType) => {
   return (
     <div className={style.wrapper}>
       <label className={style.section__checkbox}>
-        <input type="checkbox" checked={checkedValue} onClick={handler} />
+        <input type="checkbox" checked={checkedValue} onClick={handler} readOnly />
         <span className={style.checkmark} />
       </label>
       <div className={style.text__wrapper}>

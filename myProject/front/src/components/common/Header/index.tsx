@@ -87,7 +87,7 @@ const Header = () => {
         <div className={style.wrapperBtnAccaunt}>
           {!admin ? <Link to="/productEditing" className={style.submitAdvertisement}><Button title="Подать обьявление" handler={() => { }} width="calc(170px + (180 - 170) * ((100vw - 768px) / (1920 - 768)))" height="36px" background="#FFAC28" textColor="#1D1D1D" fontSize={null} fontWeight={null} margin={null} borderRadius={null} icon={null} /></Link> : '' }
           <div className={style.profileContainer}>
-            <Link className={style.authLink} to={path}>{logInLogOut ? <DropDownMenu /> : 'Войти'}</Link>
+            {logInLogOut ? <DropDownMenu /> : <Link className={style.authLink} to={path}>Войти</Link>}
           </div>
           <div className={style.lockBurger}>
             <Link to="/basket" className={style.lock}>

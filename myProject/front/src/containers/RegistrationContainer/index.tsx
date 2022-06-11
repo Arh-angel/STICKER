@@ -49,7 +49,7 @@ const RegistrationContainer = () => {
       setErMessage('');
       dispatch(userRegistered(true));
       dispatch(userAuthorized(true));
-      dispatch(registration({ userName, userLastName, userEmail, userPassword }));
+      await dispatch(registration({ userName, userLastName, userEmail, userPassword }));
       navigate('/', { state: { userReg } });
     } else {
       setErMessage('Заполните обязательные поля');
