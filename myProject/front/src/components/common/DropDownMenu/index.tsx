@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../../hooks/storeHooks';
-import { userAuthorized } from '../../../store/slice/userSlice/userSlice';
+import { logout, userAuthorized } from '../../../store/slice/userSlice/userSlice';
 
 import style from './DropDownMenu.module.scss';
 
@@ -17,7 +17,8 @@ const DropDownMenu = () => {
     setDropDownMenu(!dropDownMenu);
   };
 
-  const userOutput = () => {
+  const userOutput = async () => {
+    await dispatch(logout());
     dispatch(userAuthorized(false));
   };
 

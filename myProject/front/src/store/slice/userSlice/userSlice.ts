@@ -1,26 +1,24 @@
-import { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser } from '../../../models/IUser';
 import { RootState } from '../../store';
 import AuthService from '../../../services/AuthService';
 import { AuthResponse } from '../../../models/response/AuthResponse';
-import apiAxios from '../../../network';
+import apiAxios, { API_URL } from '../../../network';
+import { useAppDispatch } from '../../../hooks/storeHooks';
+
+const dispatch = useAppDispatch();
 
 export const registration = createAsyncThunk(
   'user/registration',
   // eslint-disable-next-line consistent-return
   async (userData: any, { rejectWithValue }) => {
     try {
-      console.log(userData);
-
       const { userName, userLastName, userEmail, userPassword } = userData;
 
-      console.log(userName, userLastName, userEmail, userPassword);
       const response = await AuthService.registration(userName, userLastName, userEmail, userPassword);
 
-      console.log(response.data);
-
-      localStorage.setItem('accessToken', response.data.accessToken);
+      localStorage.setItem('token', response.data.accessToken);
       return response.data.user;
     } catch (e:any) {
       rejectWithValue(e.response.data);
@@ -33,14 +31,46 @@ export const login = createAsyncThunk(
   // eslint-disable-next-line consistent-return
   async (userData: any, { rejectWithValue }) => {
     try {
-      const { email, password } = userData;
-      const response = await AuthService.login(email, password);
+      const { userEmail, userPassword } = userData;
+      const response = await AuthService.login(userEmail, userPassword);
+
+      localStorage.setItem('token', response.data.accessToken);
       return response.data.user;
     } catch (e:any) {
       rejectWithValue(e.response.data);
     }
   }
 );
+
+export const logout = createAsyncThunk(
+  'user/logout',
+  // eslint-disable-next-line consistent-return
+  async () => {
+    try {
+      await AuthService.logout();
+
+      localStorage.removeItem('token');
+    } catch (e:any) {
+      console.log(e.message);
+    }
+  }
+);
+export const checkAuth = createAsyncThunk(
+  'user/checkAuth',
+
+  // eslint-disable-next-line consistent-return
+  async () => {
+    try {
+      const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, { withCredentials: true });
+
+      localStorage.setItem('token', response.data.accessToken);
+      return response.data.user;
+    } catch (e:any) {
+      console.log(e.message);
+    }
+  }
+);
+
 export interface UserState {
   user: IUser,
   status: string | null;
@@ -118,12 +148,18 @@ export const userSlice = createSlice({
         ...state.user,
         ...action.payload
       };
+      state.userAuthorized = false;
     });
     builder.addCase(login.fulfilled, (state, action) => {
       state.user = {
         ...state.user,
         ...action.payload
       };
+      state.userAuthorized = false;
+    });
+    builder.addCase(logout.fulfilled, (state) => {
+      state.user = {} as IUser;
+      state.userAuthorized = false;
     });
   },
 });
