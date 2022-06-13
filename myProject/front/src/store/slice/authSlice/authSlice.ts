@@ -4,22 +4,17 @@ import { IUser } from '../../../models/IUser';
 import AuthService from '../../../services/AuthService';
 import { AuthResponse } from '../../../models/response/AuthResponse';
 import { API_URL } from '../../../network';
-import { useAppDispatch } from '../../../hooks/storeHooks';
-import { userAuthorized } from '../userSlice/userSlice';
 
 export const registration = createAsyncThunk(
   'user/registration',
   // eslint-disable-next-line consistent-return
   async (userData: any, { rejectWithValue }) => {
-    const dispatch = useAppDispatch();
     try {
       const { userName, userLastName, userEmail, userPassword } = userData;
 
       const response = await AuthService.registration(userName, userLastName, userEmail, userPassword);
 
       localStorage.setItem('token', response.data.accessToken);
-
-      dispatch(userAuthorized(true));
 
       return response.data.user;
     } catch (e:any) {
@@ -32,14 +27,11 @@ export const login = createAsyncThunk(
   'user/login',
   // eslint-disable-next-line consistent-return
   async (userData: any, { rejectWithValue }) => {
-    const dispatch = useAppDispatch();
     try {
       const { enteredEmail, enteredPassword } = userData;
       const response = await AuthService.login(enteredEmail, enteredPassword);
 
       localStorage.setItem('token', response.data.accessToken);
-
-      dispatch(userAuthorized(true));
 
       return response.data.user;
     } catch (e:any) {
@@ -52,13 +44,10 @@ export const logout = createAsyncThunk(
   'user/logout',
   // eslint-disable-next-line consistent-return
   async () => {
-    const dispatch = useAppDispatch();
     try {
       await AuthService.logout();
 
       localStorage.removeItem('token');
-
-      dispatch(userAuthorized(false));
     } catch (e:any) {
       console.log(e.message);
     }

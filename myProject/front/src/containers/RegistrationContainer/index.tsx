@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import RegistrationPage from '../../components/pages/RegistrationPage';
 
-import { selectUserAuthorized, selectUserEmail, selectUserFirstName, selectUserLastName, selectUserPassword, selectUserRegistered, userAuthorized, userRegistered, selectAgreementStatus } from '../../store/slice/userSlice/userSlice';
+import { selectUserEmail, selectUserFirstName, selectUserLastName, selectUserPassword, selectUserRegistered, userAuthorized, userRegistered, selectAgreementStatus } from '../../store/slice/userSlice/userSlice';
 import { registration } from '../../store/slice/authSlice/authSlice';
 
 const RegistrationContainer = () => {
@@ -19,7 +19,6 @@ const RegistrationContainer = () => {
   const userEmail = useAppSelector(selectUserEmail);
   const userPassword = useAppSelector(selectUserPassword);
   const userReg = useAppSelector(selectUserRegistered);
-  const userAuth = useAppSelector(selectUserAuthorized);
   const userAgreement = useAppSelector(selectAgreementStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

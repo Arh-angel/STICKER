@@ -20,14 +20,10 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log('this point');
-
     if (localStorage.getItem('token')) {
       dispatch(checkAuth());
     }
   }, []);
-
-  console.log('this point two');
 
   return (
     <Routes>
