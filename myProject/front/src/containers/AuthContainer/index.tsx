@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthPage from '../../components/pages/AuthPage';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
+import { login } from '../../store/slice/authSlice/authSlice';
 import { authorizationErrorStatus, selectAuthorizationErrorStatus, selectUserAuthorized, selectUserEmail, selectUserPassword, selectUserRole, userAuthorized } from '../../store/slice/userSlice/userSlice';
 
 const AuthContainer = () => {
@@ -33,8 +34,9 @@ const AuthContainer = () => {
     setRole(userRole);
   }, [userRole]);
 
-  const handler = () => {
+  const handler = async () => {
     if (!authErrorStatus && userEmail === enteredEmail && userPassword === enteredPassword) {
+      await dispatch(login({ enteredEmail, enteredPassword }));
       dispatch(userAuthorized(true));
       setErMessage('');
       if (role === 'admin') {

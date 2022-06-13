@@ -1,80 +1,7 @@
-import axios, { AxiosResponse } from 'axios';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from '../../../models/IUser';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
-import AuthService from '../../../services/AuthService';
-import { AuthResponse } from '../../../models/response/AuthResponse';
-import apiAxios, { API_URL } from '../../../network';
-import { useAppDispatch } from '../../../hooks/storeHooks';
-
-const dispatch = useAppDispatch();
-
-export const registration = createAsyncThunk(
-  'user/registration',
-  // eslint-disable-next-line consistent-return
-  async (userData: any, { rejectWithValue }) => {
-    try {
-      const { userName, userLastName, userEmail, userPassword } = userData;
-
-      const response = await AuthService.registration(userName, userLastName, userEmail, userPassword);
-
-      localStorage.setItem('token', response.data.accessToken);
-      return response.data.user;
-    } catch (e:any) {
-      rejectWithValue(e.response.data);
-    }
-  }
-);
-
-export const login = createAsyncThunk(
-  'user/login',
-  // eslint-disable-next-line consistent-return
-  async (userData: any, { rejectWithValue }) => {
-    try {
-      const { userEmail, userPassword } = userData;
-      const response = await AuthService.login(userEmail, userPassword);
-
-      localStorage.setItem('token', response.data.accessToken);
-      return response.data.user;
-    } catch (e:any) {
-      rejectWithValue(e.response.data);
-    }
-  }
-);
-
-export const logout = createAsyncThunk(
-  'user/logout',
-  // eslint-disable-next-line consistent-return
-  async () => {
-    try {
-      await AuthService.logout();
-
-      localStorage.removeItem('token');
-    } catch (e:any) {
-      console.log(e.message);
-    }
-  }
-);
-export const checkAuth = createAsyncThunk(
-  'user/checkAuth',
-
-  // eslint-disable-next-line consistent-return
-  async () => {
-    try {
-      const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, { withCredentials: true });
-
-      localStorage.setItem('token', response.data.accessToken);
-      return response.data.user;
-    } catch (e:any) {
-      console.log(e.message);
-    }
-  }
-);
 
 export interface UserState {
-  user: IUser,
-  status: string | null;
-  error: string | null;
   firstName: string;
   lastName: string;
   age: string;
@@ -88,13 +15,6 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-  user: {
-    id: '',
-    email: '',
-    isActivated: false
-  },
-  status: null,
-  error: null,
   firstName: '',
   lastName: '',
   age: '',
@@ -141,26 +61,6 @@ export const userSlice = createSlice({
     authorizationErrorStatus: (state, action: PayloadAction<boolean>) => {
       state.authorizationErrorStatus = action.payload;
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(registration.fulfilled, (state, action) => {
-      state.user = {
-        ...state.user,
-        ...action.payload
-      };
-      state.userAuthorized = false;
-    });
-    builder.addCase(login.fulfilled, (state, action) => {
-      state.user = {
-        ...state.user,
-        ...action.payload
-      };
-      state.userAuthorized = false;
-    });
-    builder.addCase(logout.fulfilled, (state) => {
-      state.user = {} as IUser;
-      state.userAuthorized = false;
-    });
   },
 });
 

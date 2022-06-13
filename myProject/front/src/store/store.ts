@@ -1,8 +1,10 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import userReducer from './slice/userSlice/userSlice';
+import adsReducer from './slice/adsSlice/adsSlise';
 
 const rootReducer = combineReducers({
   user: userReducer,
+  ads: adsReducer
 });
 
 export const store = configureStore({

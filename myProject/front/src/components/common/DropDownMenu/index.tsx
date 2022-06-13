@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../../hooks/storeHooks';
-import { logout, userAuthorized } from '../../../store/slice/userSlice/userSlice';
+import { logout } from '../../../store/slice/authSlice/authSlice';
+import { userAuthorized } from '../../../store/slice/userSlice/userSlice';
 
 import style from './DropDownMenu.module.scss';
 

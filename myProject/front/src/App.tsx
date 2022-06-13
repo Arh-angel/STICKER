@@ -14,16 +14,20 @@ import ProductEditingContainer from './containers/ProductEditingContainer';
 import ErContainer from './containers/ErContainer';
 import ProductContainer from './containers/ProductContainer';
 import { useAppDispatch } from './hooks/storeHooks';
-import { checkAuth } from './store/slice/userSlice/userSlice';
+import { checkAuth } from './store/slice/authSlice/authSlice';
 
 const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    console.log('this point');
+
     if (localStorage.getItem('token')) {
       dispatch(checkAuth());
     }
   }, []);
+
+  console.log('this point two');
 
   return (
     <Routes>

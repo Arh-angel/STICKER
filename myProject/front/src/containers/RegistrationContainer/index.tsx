@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import RegistrationPage from '../../components/pages/RegistrationPage';
 
-import { selectUserAuthorized, selectUserEmail, selectUserFirstName, selectUserLastName, selectUserPassword, selectUserRegistered, userAuthorized, userRegistered, selectAgreementStatus, authorizationErrorStatus, registration } from '../../store/slice/userSlice/userSlice';
-import makeRequest from '../../network';
+import { selectUserAuthorized, selectUserEmail, selectUserFirstName, selectUserLastName, selectUserPassword, selectUserRegistered, userAuthorized, userRegistered, selectAgreementStatus } from '../../store/slice/userSlice/userSlice';
+import { registration } from '../../store/slice/authSlice/authSlice';
 
 const RegistrationContainer = () => {
   const [pass, setPass] = useState('');

@@ -9,7 +9,7 @@ import PasswordRecoveryLink from '../../common/LInks/PasswordRecoveryLink';
 import style from './AuthPage.module.scss';
 
 type AuthPageType = {
-  handler: () => void | null,
+  handler: () => void | null | Promise<void>,
   writeEmail: (value:string) => void | null,
   writePassword: (value:string) => void | null,
   erMessage: string
