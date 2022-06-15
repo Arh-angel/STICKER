@@ -5,12 +5,14 @@ type InputPropsType = {
   id: string;
   placeholder: SVGProps<SVGElement> | string;
   type: 'text';
+  handlerSearchValue: (value:string) => void;
 };
 
 const SearchInput = ({
-  id, placeholder, type
+  id, placeholder, type, handlerSearchValue
 }: InputPropsType) => {
-  const handler = (event: ChangeEvent<HTMLInputElement>) => '1';
+  const handler = (event: ChangeEvent<HTMLInputElement>) => handlerSearchValue(event.target.value);
+
   return (
     <label className={style.wrapper} htmlFor={id}>
       <input id={id} onChange={handler} type={type} />

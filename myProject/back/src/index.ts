@@ -18,7 +18,7 @@ const srv = hapi.server({
   routes: {
     cors: {
       origin: ['*'],
-      credentials: true
+      credentials: true,
     },
     files: {
       relativeTo: './data'

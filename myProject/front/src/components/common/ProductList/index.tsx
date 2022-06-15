@@ -1,27 +1,48 @@
 /* eslint-disable react/jsx-indent */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAppSelector } from '../../../hooks/storeHooks';
+import { IAd } from '../../../models/IAd';
+import { selectAds } from '../../../store/slice/adsSlice/adsSlice';
 import Button from '../Button';
 import ProductItem from './ProductItem';
 
 import style from './ProductList.module.scss';
 
-const ProductList = () => {
-  console.log('Product list');
+type ProductListPropsType = {
+  ads: IAd[]
+}
+
+const ProductList = (props: ProductListPropsType) => {
+  const { ads } = props;
+  const [dataAds, setDataAds] = useState<IAd[]>([]);
+  const [adsPerPage, setAdsPerPage] = useState<number>(9);
+
+  useEffect(() => {
+    setDataAds(ads);
+  }, []);
+
+  const handlerBtn = () => {
+    setAdsPerPage((prev) => prev * 2);
+  };
 
   return (
     <div className={style.container}>
       <h3 className={style.title}>Вся лента</h3>
       <div className={style.wrapperList}>
         <ul className={style.list}>
-          <ProductItem />
-          <ProductItem />
-          <ProductItem />
+          {dataAds.reverse().map((ad, index) => {
+            if (index <= adsPerPage) {
+              return <ProductItem dataAd={ad} />;
+            }
+
+            return '';
+          })}
         </ul>
       </div>
       <div className={style.BtnLoadMore}>
         <Button
           title="Загрузить еще"
-          handler={() => null}
+          handler={handlerBtn}
           width="242px"
           height="48px"
           background="transparent"

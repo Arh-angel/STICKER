@@ -38,9 +38,25 @@ export const change = createAsyncThunk(
 export const getAds = createAsyncThunk(
   'user/getAds',
   // eslint-disable-next-line consistent-return
-  async (userData: any, { rejectWithValue }) => {
+  async () => {
     try {
       const response = await AdsService.getAds();
+
+      return response.data;
+    } catch (e:any) {
+      return e.message;
+    }
+  }
+);
+
+export const searchAds = createAsyncThunk(
+  'user/searchAds',
+  // eslint-disable-next-line consistent-return
+  async (userData: any, { rejectWithValue }) => {
+    try {
+      const { serachValue } = userData;
+
+      const response = await AdsService.searchAds(serachValue);
 
       return response.data;
     } catch (e:any) {
@@ -54,7 +70,7 @@ export const getCategoryAd = createAsyncThunk(
   // eslint-disable-next-line consistent-return
   async (userData: any, { rejectWithValue }) => {
     try {
-      const { category } = userData;
+      const category = userData;
 
       const response = await AdsService.getCategoryAd(category);
 
@@ -109,11 +125,13 @@ const initialState: AdsState = {
     nameAd: '',
     category: '',
     price: '',
-    phoneNumber: '',
+    phoneNumber: '8978978797',
     description: '',
+    date: '',
     foto: [],
     location: '',
-    published: false
+    published: false,
+    views: 0
   }
 };
 
@@ -142,6 +160,9 @@ export const adsSlice = createSlice({
     addDescriptionAd: (state, action: PayloadAction<string>) => {
       state.ad.description = action.payload;
     },
+    addDateAd: (state, action: PayloadAction<string>) => {
+      state.ad.date = action.payload;
+    },
     // userFoto: (state, action: PayloadAction<File>) => {
     //   state.ad.foto = state.ad.foto?.push(action.payload);
     // },
@@ -151,6 +172,9 @@ export const adsSlice = createSlice({
     addPublishedAdd: (state, action: PayloadAction<boolean>) => {
       state.ad.published = action.payload;
     },
+    addViewsAdd: (state, action: PayloadAction<boolean>) => {
+      state.ad.published = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(create.fulfilled, (state, action) => {
@@ -158,6 +182,12 @@ export const adsSlice = createSlice({
     builder.addCase(change.fulfilled, (state, action) => {
     });
     builder.addCase(getAds.fulfilled, (state, action) => {
+      state.ads = {
+        ...state.ads,
+        ...action.payload
+      };
+    });
+    builder.addCase(searchAds.fulfilled, (state, action) => {
       state.ads = {
         ...state.ads,
         ...action.payload
@@ -181,8 +211,10 @@ export const adsSlice = createSlice({
   },
 });
 
-export const { addIdAd, addUserIdAd, addNameAd, addCategoryAd, addPriceAd, addPhoneNumberAd, addDescriptionAd, addLocationAd, addPublishedAdd } = adsSlice.actions;
+export const { addIdAd, addUserIdAd, addNameAd, addCategoryAd, addPriceAd, addPhoneNumberAd, addDescriptionAd, addDateAd, addLocationAd, addPublishedAdd, addViewsAdd } = adsSlice.actions;
 
+export const selectAds = (state: RootState) => state.ads.ads;
+export const selectAd = (state: RootState) => state.ads.ad;
 export const selectIdAd = (state: RootState) => state.ads.ad.id;
 export const selectUserIdAd = (state: RootState) => state.ads.ad.userId;
 export const selectNameAd = (state: RootState) => state.ads.ad.nameAd;
@@ -190,8 +222,10 @@ export const selectCategoryAd = (state: RootState) => state.ads.ad.category;
 export const selectPriceAd = (state: RootState) => state.ads.ad.price;
 export const selectPhoneNumberAd = (state: RootState) => state.ads.ad.phoneNumber;
 export const selectDescriptionAd = (state: RootState) => state.ads.ad.description;
+export const selectDateAd = (state: RootState) => state.ads.ad.date;
 export const selectFotoAd = (state: RootState) => state.ads.ad.foto;
 export const selectLocationAd = (state: RootState) => state.ads.ad.location;
 export const selectPublishedAd = (state: RootState) => state.ads.ad.published;
+export const selectViewsAd = (state: RootState) => state.ads.ad.views;
 
 export default adsSlice.reducer;

@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { IAd } from '../models/IAd';
 import { IAds } from '../models/IAds';
+import { ISearchAds } from '../models/ISearchAds';
 import apiAxios from '../network';
 
 export default class AdsService {
@@ -14,6 +15,10 @@ export default class AdsService {
 
   static async getAds(): Promise<AxiosResponse<IAds>> {
     return apiAxios.get('/ads');
+  }
+
+  static async searchAds(searchValue: string): Promise<AxiosResponse<ISearchAds>> {
+    return apiAxios.get('/searchAds', { data: { searchValue } });
   }
 
   static async getCategoryAd(category: string): Promise<AxiosResponse<IAds>> {

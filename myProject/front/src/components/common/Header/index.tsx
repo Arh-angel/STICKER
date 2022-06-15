@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-indent */
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import style from './Header.module.scss';
@@ -9,17 +9,16 @@ import SearchInput from '../Form/Input/SearchInput';
 import Burger from '../Burger';
 import DropDownMenu from '../DropDownMenu';
 import { useAppDispatch, useAppSelector } from '../../../hooks/storeHooks';
-import { selectAuthorizationErrorStatus, selectUserAuthorized, selectUserRegistered, userAuthorized } from '../../../store/slice/userSlice/userSlice';
+import { selectAuthorizationErrorStatus, selectUserAuthorized, selectUserRegistered } from '../../../store/slice/userSlice/userSlice';
+import { searchAds } from '../../../store/slice/adsSlice/adsSlice';
 
 const Header = () => {
   const [admin, setAdmin] = useState(false);
-  const [searchItem, setSearchItem] = useState('');
+  const [searchValue, setSearchValue] = useState('');
   const [logInLogOut, setLogInLogOut] = useState(false);
   const [path, setPath] = useState('');
 
   const userAuth = useAppSelector(selectUserAuthorized);
-  const userReg = useAppSelector(selectUserRegistered);
-  const authError = useAppSelector(selectAuthorizationErrorStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -39,18 +38,14 @@ const Header = () => {
     }
   }, [userAuth]);
 
-  const searchResults = () => {
-    navigate('/searchResults');
+  const handlerSearchValue = (value:string) => {
+    setSearchValue(value);
   };
 
-  // const handler = () => {
-  //   if (userAuth) {
-  //     // setPath('/');
-  //     dispatch(userAuthorized(false));
-  //   } else {
-  //     // setPath('/auth');
-  //   }
-  // };
+  const searchResults = () => {
+    dispatch(searchAds(searchValue));
+    navigate('/searchResults');
+  };
 
   return (
     <header className={style.header}>
@@ -73,15 +68,14 @@ const Header = () => {
         {!admin ? <div className={style.searchProductInput}>
           <SearchInput
             id="search"
-            placeholder={
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g opacity="0.4">
-                  <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#2A2F37" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M20.9999 20.9999L16.6499 16.6499" stroke="#2A2F37" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </g>
-              </svg>
-                      }
-            type="text" />
+            placeholder={<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g opacity="0.4">
+                <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#2A2F37" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M20.9999 20.9999L16.6499 16.6499" stroke="#2A2F37" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </g>
+                         </svg>}
+            type="text"
+            handlerSearchValue={handlerSearchValue} />
           <Button title="Искать" handler={searchResults} width="96px" height="36px" background={null} textColor={null} fontSize={null} fontWeight={null} margin={null} borderRadius="0 4px 4px 0" icon={null} />
                   </div> : ''}
         <div className={style.wrapperBtnAccaunt}>

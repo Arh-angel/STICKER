@@ -28,12 +28,13 @@ const App = () => {
   return (
     <Routes>
       <Route path="/" element={<PageWrapper />}>
-        <Route index element={<AuthHOC><MainContainer /></AuthHOC>} />
-        <Route path="/:id" element={<AuthHOC><ProductContainer /></AuthHOC>} />
+        <Route index element={<MainContainer />} />
+        <Route path="/:category" element={<MainContainer />} />
         <Route path="ads" element={<AuthHOC><AdsContainer /></AuthHOC>} />
         <Route path="/ads/:id" element={<AuthHOC><ProductContainer /></AuthHOC>} />
         <Route path="productEditing" element={<AuthHOC><ProductEditingContainer /></AuthHOC>} />
         <Route path="searchResults" element={<AuthHOC><SearchResultsContainer /></AuthHOC>} />
+        <Route path="/searchResults/:id" element={<AuthHOC><ProductContainer /></AuthHOC>} />
         <Route path="reg" element={<RegistrationContainer />} />
         <Route path="auth" element={<AuthContainer />} />
         <Route path="*" element={<ErContainer />} />

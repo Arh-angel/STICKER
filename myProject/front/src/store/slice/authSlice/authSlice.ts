@@ -4,6 +4,7 @@ import { IUser } from '../../../models/IUser';
 import AuthService from '../../../services/AuthService';
 import { AuthResponse } from '../../../models/response/AuthResponse';
 import { API_URL } from '../../../network';
+import { RootState } from '../../store';
 
 export const registration = createAsyncThunk(
   'user/registration',
@@ -104,5 +105,9 @@ export const authSlice = createSlice({
     });
   },
 });
+
+export const selectUserId = (state: RootState) => state.auth.user.id;
+export const selectUserEmail = (state: RootState) => state.auth.user.email;
+export const selectUserIsActivated = (state: RootState) => state.auth.user.isActivated;
 
 export default authSlice.reducer;

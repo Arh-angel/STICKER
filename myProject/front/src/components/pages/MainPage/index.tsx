@@ -1,17 +1,22 @@
 import React from 'react';
+import { IAd } from '../../../models/IAd';
 
 import Banner from '../../common/Baner';
 import MainMenu from '../../common/MainMenu';
 import ProductList from '../../common/ProductList';
 
-const MainPage = () => {
-  console.log('main page');
+type MainPagePropsType = {
+  ads: IAd[],
+}
+
+const MainPage = (props: MainPagePropsType) => {
+  const { ads } = props;
 
   return (
     <>
       <Banner />
       <MainMenu />
-      <ProductList />
+      <ProductList ads={ads} />
     </>
   );
 };

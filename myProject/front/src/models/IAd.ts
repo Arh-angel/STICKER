@@ -6,7 +6,9 @@ export interface IAd {
   price: string;
   phoneNumber: string;
   description: string;
+  date: string;
   foto: File[] | [];
   location: string;
-  published: boolean
+  published: boolean;
+  views: number
 }

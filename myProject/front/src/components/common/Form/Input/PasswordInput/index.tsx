@@ -58,12 +58,10 @@ const PasswordInput = ({
   useEffect(() => {
     if (currentValue.length > 0) {
       if (!currentValue.match(regPas) || currentValue.length < 8) {
-        console.log('ввод');
         setValid(false);
         setErMessage('Пароль должен не менее 8 символов и состоять из цифр и латинских букв обоих регистров');
         dispatch(authorizationErrorStatus(true));
       } else if (!pasMatch && pasMatch !== null) {
-        console.log('совпадение');
         setValid(false);
         setErMessage('Пароли не совпадают');
         dispatch(authorizationErrorStatus(true));
