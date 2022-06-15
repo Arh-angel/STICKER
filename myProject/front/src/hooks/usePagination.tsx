@@ -6,14 +6,20 @@ const usePagination: UsePagination = ({ contentPerPage, count }) => {
 
   const pageCount = Math.ceil(count / contentPerPage);
 
-  const lastContentIndex = page * contentPerPage;
+  let lastContentIndex = page * contentPerPage;
 
-  const firstContentIndex = lastContentIndex - contentPerPage;
+  let firstContentIndex = lastContentIndex - contentPerPage;
+
+  if (pageCount === 0) {
+    lastContentIndex = 0;
+
+    firstContentIndex = -1;
+  }
 
   const changePage = (direction: boolean) => {
     setPage((state) => {
       if (direction) {
-        if (state === pageCount) {
+        if (state === pageCount || pageCount === 0) {
           return state;
         }
         return state + 1;

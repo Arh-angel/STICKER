@@ -49,6 +49,22 @@ export const getAds = createAsyncThunk(
   }
 );
 
+export const getUserAds = createAsyncThunk(
+  'user/getUserAds',
+  // eslint-disable-next-line consistent-return
+  async (userData: any, { rejectWithValue }) => {
+    try {
+      const { userAds } = userData;
+
+      const response = await AdsService.getUserAds(userAds);
+
+      return response.data;
+    } catch (e:any) {
+      rejectWithValue(e.response.data);
+    }
+  }
+);
+
 export const searchAds = createAsyncThunk(
   'user/searchAds',
   // eslint-disable-next-line consistent-return
@@ -125,7 +141,7 @@ const initialState: AdsState = {
     nameAd: '',
     category: '',
     price: '',
-    phoneNumber: '8978978797',
+    phoneNumber: '',
     description: '',
     date: '',
     foto: [],
@@ -169,11 +185,14 @@ export const adsSlice = createSlice({
     addLocationAd: (state, action: PayloadAction<string>) => {
       state.ad.location = action.payload;
     },
-    addPublishedAdd: (state, action: PayloadAction<boolean>) => {
+    addPublishedAd: (state, action: PayloadAction<boolean>) => {
       state.ad.published = action.payload;
     },
-    addViewsAdd: (state, action: PayloadAction<boolean>) => {
-      state.ad.published = action.payload;
+    addViewsAd: (state, action: PayloadAction<number>) => {
+      state.ad.views = action.payload;
+    },
+    clearAdState: (state) => {
+      state.ad = {} as IAd;
     },
   },
   extraReducers: (builder) => {
@@ -211,7 +230,7 @@ export const adsSlice = createSlice({
   },
 });
 
-export const { addIdAd, addUserIdAd, addNameAd, addCategoryAd, addPriceAd, addPhoneNumberAd, addDescriptionAd, addDateAd, addLocationAd, addPublishedAdd, addViewsAdd } = adsSlice.actions;
+export const { addIdAd, addUserIdAd, addNameAd, addCategoryAd, addPriceAd, addPhoneNumberAd, addDescriptionAd, addDateAd, addLocationAd, addPublishedAd, addViewsAd, clearAdState } = adsSlice.actions;
 
 export const selectAds = (state: RootState) => state.ads.ads;
 export const selectAd = (state: RootState) => state.ads.ad;

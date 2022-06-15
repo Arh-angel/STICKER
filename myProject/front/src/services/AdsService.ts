@@ -17,6 +17,10 @@ export default class AdsService {
     return apiAxios.get('/ads');
   }
 
+  static async getUserAds(userAds:string): Promise<AxiosResponse<IAds>> {
+    return apiAxios.get(`/ads/${userAds}`);
+  }
+
   static async searchAds(searchValue: string): Promise<AxiosResponse<ISearchAds>> {
     return apiAxios.get('/searchAds', { data: { searchValue } });
   }

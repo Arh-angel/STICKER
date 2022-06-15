@@ -1,4 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useAppDispatch } from '../../../../../hooks/storeHooks';
+import { addDescriptionAd } from '../../../../../store/slice/adsSlice/adsSlice';
 
 import style from './Textarea.module.scss';
 
@@ -12,6 +14,8 @@ const Textarea = (props: TextareaPropsType) => {
   const [currentValue, setCurrentValue] = useState('');
   const [valid, setValid] = useState(true);
   const [textError, setTextError] = useState('');
+
+  const dispatch = useAppDispatch();
 
   const handler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setCurrentValue(event.target.value);
@@ -27,6 +31,12 @@ const Textarea = (props: TextareaPropsType) => {
       }
     } else {
       setValid(true);
+    }
+  }, [currentValue]);
+
+  useEffect(() => {
+    if (currentValue.length > 0) {
+      dispatch(addDescriptionAd(currentValue));
     }
   }, [currentValue]);
 

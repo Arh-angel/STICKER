@@ -2,6 +2,8 @@ import React, { useState, useEffect, ChangeEvent, useRef } from 'react';
 import IMask from 'imask';
 
 import style from './InputInfo.module.scss';
+import { useAppDispatch } from '../../../../../hooks/storeHooks';
+import { addDateAd, addLocationAd, addNameAd, addPhoneNumberAd, addPriceAd } from '../../../../../store/slice/adsSlice/adsSlice';
 
 type InputInfoPropsType = {
   title: string | null;
@@ -17,6 +19,8 @@ const InputInfo = ({
   const [currentInput, setCurrentInput] = useState<any>();
   const [valid, setValid] = useState(true);
   const [textError, setTextError] = useState('');
+
+  const dispatch = useAppDispatch();
 
   const inputRef = useRef(null);
 
@@ -76,6 +80,22 @@ const InputInfo = ({
       }
     } else {
       setValid(true);
+    }
+  }, [currentValue]);
+
+  useEffect(() => {
+    if (currentValue.length > 0) {
+      if (id === 'nameProduct') {
+        dispatch(addNameAd(currentValue));
+      } else if (id === 'priceProduct') {
+        dispatch(addPriceAd(currentValue));
+      } else if (id === 'datePublish') {
+        dispatch(addDateAd(currentValue));
+      } else if (id === 'tel') {
+        dispatch(addPhoneNumberAd(currentValue));
+      } else if (id === 'location') {
+        dispatch(addLocationAd(currentValue));
+      }
     }
   }, [currentValue]);
 

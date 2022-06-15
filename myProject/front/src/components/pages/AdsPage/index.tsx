@@ -8,18 +8,24 @@ import Button from '../../common/Button';
 import Filter from '../../common/Filter';
 
 import style from './AdsPage.module.scss';
+import { IAd } from '../../../models/IAd';
 
-type AdsProps = {
+type AdsPropsType = {
   handlerBtn: () => void;
+  dataAds: IAd[]
 }
 
-const AdsPage = (props: AdsProps) => {
-  const { handlerBtn } = props;
+const AdsPage = (props: AdsPropsType) => {
+  const { handlerBtn, dataAds } = props;
 
-  const [ads, setAds] = useState<object[]>([{ id: 1, name: 'Чепчик', category: 'Одежда', publicationDate: '12 апреля 2022', publicationStatus: 'Да' }, { id: 2, name: 'Чепчик', category: 'Одежда', publicationDate: '12 апреля 2022', publicationStatus: 'Да' }, { id: 3, name: 'Чепчик', category: 'Одежда', publicationDate: '12 апреля 2022', publicationStatus: 'Да' }, { id: 4, name: 'Чепчик', category: 'Одежда', publicationDate: '12 апреля 2022', publicationStatus: 'Да' }, { id: 5, name: 'Чепчик', category: 'Одежда', publicationDate: '12 апреля 2022', publicationStatus: 'Да' }, { id: 6, name: 'Чепчик', category: 'Одежда', publicationDate: '12 апреля 2022', publicationStatus: 'Да' }, { id: 7, name: 'Чепчик', category: 'Одежда', publicationDate: '12 апреля 2022', publicationStatus: 'Да' }, { id: 8, name: 'Чепчик', category: 'Одежда', publicationDate: '12 апреля 2022', publicationStatus: 'Да' }, { id: 9, name: 'Чепчик', category: 'Одежда', publicationDate: '12 апреля 2022', publicationStatus: 'Да' }]);
+  const [ads, setAds] = useState<IAd[]>([]);
   const [openFilterMenu, setOpenFilterMenu] = useState(false);
   const [firstPagePag, setFirstPagePag] = useState(false);
   const [lastPagePag, setLastPagePag] = useState(false);
+
+  useEffect(() => {
+    setAds(dataAds);
+  }, []);
 
   const {
     firstContentIndex,
@@ -40,7 +46,7 @@ const AdsPage = (props: AdsProps) => {
       setFirstPagePag(false);
     }
 
-    if (page === totalPages) {
+    if (page === totalPages || ads.length === 0) {
       setLastPagePag(true);
     } else {
       setLastPagePag(false);
@@ -177,8 +183,8 @@ const AdsPage = (props: AdsProps) => {
           <ul className={style.productList}>
             {ads
               .slice(firstContentIndex, lastContentIndex)
-              .map((el: any) => (
-                <Ads id={el.id} name={el.name} category={el.category} publicationDate={el.publicationDate} publicationStatus={el.publicationStatus} />
+              .map((dataAd: any) => (
+                <Ads dataAd={dataAd} />
               ))}
           </ul>
         </div>

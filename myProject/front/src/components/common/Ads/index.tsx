@@ -1,20 +1,17 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { useState } from 'react';
+import { IAd } from '../../../models/IAd';
 import Button from '../Button';
 import PublishMenu from '../PublishMenu';
 
 import style from './Ads.module.scss';
 
 type AdsType = {
-  id: number,
-  name: string,
-  category: string,
-  publicationDate: string,
-  publicationStatus: string,
+  dataAd: IAd,
 }
 
 const Ads = (props: AdsType) => {
-  const { id, name, category, publicationDate, publicationStatus } = props;
+  const { dataAd } = props;
 
   const [openPublishMenu, setOpenPublishMenu] = useState(false);
 
@@ -23,11 +20,11 @@ const Ads = (props: AdsType) => {
   };
 
   return (
-    <li className={style.productItem} key={id}>
-      <p className={style.productItemName}>{name}</p>
-      <p className={style.pageProductItemCategory}>{category}</p>
-      <p className={style.productItemDate}>{publicationDate}</p>
-      <p className={style.productItemPublication}>{publicationStatus}</p>
+    <li className={style.productItem} key={dataAd.id}>
+      <p className={style.productItemName}>{dataAd.nameAd}</p>
+      <p className={style.pageProductItemCategory}>{dataAd.category}</p>
+      <p className={style.productItemDate}>{dataAd.date}</p>
+      <p className={style.productItemPublication}>{dataAd.published}</p>
       <div className={style.productItemBtnWrapper}>
         <Button
           title={null}
@@ -45,7 +42,7 @@ const Ads = (props: AdsType) => {
             <path d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z" stroke="#2A2F37" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z" stroke="#2A2F37" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>} />
-        {openPublishMenu ? <PublishMenu /> : ''}
+        {openPublishMenu ? <PublishMenu dataAd={dataAd} /> : ''}
       </div>
     </li>
   );

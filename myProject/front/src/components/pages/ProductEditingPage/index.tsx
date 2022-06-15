@@ -15,15 +15,17 @@ import Form from '../../common/Form';
 import InputInfo from '../../common/Form/Input/InputInfo';
 import Map from '../../common/Map';
 import Textarea from '../../common/Form/Input/Textarea';
+import { IAd } from '../../../models/IAd';
 
 type ProductEditingPageProps = {
-  handlerBtnBack: () => void
+  handlerBtnBack: () => void,
+  dataAd: IAd
 };
 
 const ProductEditingPage = (props: ProductEditingPageProps) => {
-  const { handlerBtnBack } = props;
+  const { handlerBtnBack, dataAd } = props;
 
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [role, setRole] = useState('Пользователь');
 
   return (
     <div className={style.container}>
@@ -44,7 +46,7 @@ const ProductEditingPage = (props: ProductEditingPageProps) => {
             <path d="M24 10.5H5.745L14.13 2.115L12 0L0 12L12 24L14.115 21.885L5.745 13.5H24V10.5Z" fill="#2C2D2E" />
               </svg>} />
         <div className={style.productEditingHeaderBlock}>
-          <h3 className={style.productEditingHeaderBlockTitle}>Чепчик</h3>
+          <h3 className={style.productEditingHeaderBlockTitle}>{dataAd.nameAd}</h3>
           <Button title="Сохранить" handler={() => null} width="147px" height="40px" background="#3A95FF" textColor="#FFFFFF" fontSize="14px" fontWeight="500" margin={null} borderRadius={null} icon={null} />
         </div>
         <div className={style.productEditingBlock}>
@@ -56,9 +58,9 @@ const ProductEditingPage = (props: ProductEditingPageProps) => {
             </div>
           </div>
           <div className={style.productEditingBlockDatePhone}>
-            {isAdmin ? <div className={style.productEditingBlockDate}>
+            {role === 'Админ' ? <div className={style.productEditingBlockDate}>
               <InputInfo title="Дата публикации" id="datePublish" placeholder="12.04.2022" type="text" />
-                       </div> : ''}
+                                </div> : ''}
             <div className={style.productEditingBlockPhone}>
               <InputInfo title="Телефон" id="tel" placeholder="+7 (_ _ _) _ _ _ - _ _ - _ _" type="text" />
             </div>
