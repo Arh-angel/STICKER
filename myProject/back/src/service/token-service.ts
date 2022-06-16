@@ -1,5 +1,5 @@
 import { TokenModel } from '../models/token-model';
-import * as Jwt from '@hapi/jwt';
+const Jwt = require('@hapi/jwt');
 
 class TokenService {
   generateTokens(payload) {
@@ -15,11 +15,14 @@ class TokenService {
 
   validateAccessToken(token) {
     try {
-      console.log(token);
+      console.log('this token', token)
+
       const userData = Jwt.token.verify(token, process.env.JWT_ACCESS_SECRET);
-      console.log(userData, 'this is validate')
+
+      console.log(userData);
       return userData;
     } catch(e) {
+      console.log(e.message)
       return null;
     }
   }

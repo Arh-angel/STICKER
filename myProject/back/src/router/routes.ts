@@ -53,9 +53,9 @@ export default [
     method: 'GET',
     path: '/users/{userId}',
     options: {
-      // auth: {
-      //   strategy: 'jwtStrategy'
-      // }
+      auth: {
+        strategy: 'jwt-strategy'
+      }
     },
     handler: (req: hapi.Request, h) => {
       return userController.getUser(req, h);

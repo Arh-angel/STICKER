@@ -1,12 +1,11 @@
 import * as hapi from '@hapi/hapi';
 import * as inert from '@hapi/inert';
 import * as cookie from '@hapi/cookie';
-import * as Jwt from '@hapi/jwt';
 import * as Boom from '@hapi/boom';
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
-import * as errorMiddleware from './middlewares/error-middleware';
-import authMiddleware from './middlewares/auth-middleware';
+const Jwt = require('@hapi/jwt');
+const HapiNowAuth = require('@now-ims/hapi-now-auth');
 
 import routes from './router/routes'; 
 import tokenService from './service/token-service';
@@ -30,51 +29,30 @@ const plugins: any[] = [
   inert,
   cookie,
   Jwt,
+  HapiNowAuth
 ];
 
 srv.register(plugins).then(() => {
-//   srv.auth.strategy('jwtStrategy', 'jwt', {
-//     keys: 'secret',
-//         verify: {
-//           aud: 'urn:audience:test',
-//           iss: 'urn:issuer:test',
-//           sub: false,
-//           nbf: true,
-//           exp: true,
-//           maxAgeSec: 30 * 24 * 60 * 60 * 1000,
-//           timeSkewSec: 15
-//         },
-//         validate: (artifacts, request, options) => {
-//           try {
-//             console.log(artifacts, request, options)
-//             const authorizationHeader = artifacts.header;
-//             console.log(authorizationHeader);
-//             if(!authorizationHeader) {
-//               return new Error('Пользователь не авторизован');
-//             }
-        
-//             const accessToken = authorizationHeader.split(' ')[1]; 
-//             console.log(accessToken);
-//             if(!accessToken) {
-//               return new Error('Пользователь не авторизован');
-//             }
+  srv.auth.strategy('jwt-strategy', 'hapi-now-auth', {
+    verifyJWT: true,
+    keychain: [process.env.JWT_ACCESS_SECRET],
+    validate: (request, token, h) => {
+      const credentials = token.decodedJWT;
+      const dataUser = tokenService.validateAccessToken(token.token);
 
-//             const validToken = tokenService.validateAccessToken(accessToken);
-            
-//             if(!validToken) {
-//               return new Error('Пользователь не авторизован');
-//             }
+        if (!dataUser) {
+          return { 
+            isValid: false,
+            credentials: {...credentials}
+          };
+        };
 
-//             return { isValid: true };
-//           }
-//           catch (err) {
-//             return {
-//                 isValid: false,
-//                 error: err.message
-//             };
-//           }
-//         }
-// });
+        return { 
+          isValid: true,
+          credentials: {...credentials} 
+        };
+    },
+  });
 
 
   srv.route(routes);
