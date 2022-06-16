@@ -15,12 +15,9 @@ class TokenService {
 
   validateAccessToken(token) {
     try {
-      console.log('this token', token)
-
-      const userData = Jwt.token.verify(token, process.env.JWT_ACCESS_SECRET);
-
-      console.log(userData);
-      return userData;
+      const decodedToken = Jwt.token.decode(token);
+      const userData = Jwt.token.verify(decodedToken, process.env.JWT_ACCESS_SECRET);
+      return decodedToken.decoded.payload;
     } catch(e) {
       console.log(e.message)
       return null;
@@ -29,8 +26,9 @@ class TokenService {
 
   validateRefreshToken(token) {
     try {
-      const userData = Jwt.token.verify(token, process.env.JWT_REFRESH_SECRET);
-      return userData;
+      const decodedToken = Jwt.token.decode(token);
+      const userData = Jwt.token.verify(decodedToken, process.env.JWT_REFRESH_SECRET);
+      return decodedToken.decoded.payload;
     } catch(e) {
       return null;
     }

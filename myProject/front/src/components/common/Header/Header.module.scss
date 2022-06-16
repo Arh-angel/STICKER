@@ -83,19 +83,10 @@
       }
     }
     
-    @media(max-width: 992px) {
-      & {
-        max-width: 100%;
-        margin-right: 24px;
-        margin-left: 24px;  
-      }
-    }
     @media(max-width: 768px) {
-      margin-right: 20px;
-      margin-left: 20px;
-      
       & {
         position: relative;
+        margin: auto;
 
         & > .logo {
           position: absolute;

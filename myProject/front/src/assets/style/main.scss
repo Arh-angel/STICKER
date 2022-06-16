@@ -40,19 +40,12 @@ a {
   }
 }
 .container {
-  width: calc(808px + (1280 - 808) * ((100vw - 768px) / (1920 - 768)));
+  width: calc(728px + (1280 - 728) * ((100vw - 768px) / (1920 - 768)));
   height: 100%;
   margin: auto;
 
-  @media(max-width: 992px) {
-    max-width: 100%;
-    margin-left: 24px;
-    margin-right: 24px;
-  }
-
-  @media(max-width: 768px) {
-    margin-left: 20px;
-    margin-right: 20px;
+  @media(max-width: 767px) {
+    width: calc(288px + (728 - 288) * ((100vw - 320px) / (767 - 320)));
   }
 }
 .active {
