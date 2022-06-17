@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { IAd } from '../../models/IAd';
 import { getAds, getUserAds, selectAds } from '../../store/slice/adsSlice/adsSlice';
 import { selectUserId } from '../../store/slice/authSlice/authSlice';
-import { selectUserRole } from '../../store/slice/userSlice/userSlice';
+import { selectRole } from '../../store/slice/userSlice/userSlice';
 
 const AdsContainer = () => {
   const [ads, setAds] = useState<IAd[]>([]);
@@ -13,7 +13,7 @@ const AdsContainer = () => {
   const userId = useAppSelector(selectUserId);
 
   const dispatch = useAppDispatch();
-  const userRole = useAppSelector(selectUserRole);
+  const userRole = useAppSelector(selectRole);
   const navigate = useNavigate();
   const handlerBtn = () => {
     navigate('/ads/productEditing');

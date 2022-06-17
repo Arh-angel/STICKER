@@ -38,7 +38,7 @@ const RegistrationPage = (props: RegistrationPageType) => {
       <Input id="email" placeholder="Email" type="text" writeEmail={() => null} handlerErMessage={handlerErMessage} />
       <PasswordInput id="password" placeholder="Пароль" type="password" trackPas={trackPas} trackRepeatPas={trackRepeatPas} pasMatch={pasMatch} writePassword={() => null} handlerErMessage={handlerErMessage} />
       <PasswordInput id="repeatPassword" placeholder="Повторите пароль" type="password" trackPas={trackPas} trackRepeatPas={trackRepeatPas} pasMatch={pasMatch} writePassword={() => null} handlerErMessage={handlerErMessage} />
-      <Checkbox text="Принимаю условия" textLink="Пользовательского соглашения" checked />
+      <Checkbox text="Принимаю условия" textLink="Пользовательского соглашения" checked handlerErMessage={handlerErMessage} />
       {erMas ? <span className={style.erMas}>{erMas}</span> : ''}
       <Button title="Создать аккаунт" handler={handler} width="100%" height="48px" background={null} textColor={null} fontSize={null} fontWeight={null} margin="24px 0 0 0" borderRadius={null} icon={null} />
     </Form>

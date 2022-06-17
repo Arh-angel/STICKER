@@ -7,7 +7,8 @@ const userSchema = new Schema({
   password: {type:String, required: true},
   isActivated: {type:Boolean, default: false},
   activationLink: {type:String},
-  age: {type:String}
+  age: {type:String},
+  role: {type:String, default: 'user'}
 });
 
 export const UserModel = mongoose.model('User', userSchema);

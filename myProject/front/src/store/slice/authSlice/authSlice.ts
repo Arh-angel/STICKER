@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser } from '../../../models/IUser';
 import AuthService from '../../../services/AuthService';
 import { AuthResponse } from '../../../models/response/AuthResponse';
@@ -54,13 +54,14 @@ export const logout = createAsyncThunk(
     }
   }
 );
+
 export const checkAuth = createAsyncThunk(
   'user/checkAuth',
 
   // eslint-disable-next-line consistent-return
   async () => {
     try {
-      const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, { withCredentials: true });
+      const response = await axios.get<AuthResponse>(`${API_URL}refresh`, { withCredentials: true });
 
       localStorage.setItem('token', response.data.accessToken);
       return response.data.user;
@@ -86,6 +87,9 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    addUserId: (state, action: PayloadAction<string>) => {
+      state.user.id = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(registration.fulfilled, (state, action) => {
@@ -105,6 +109,8 @@ export const authSlice = createSlice({
     });
   },
 });
+
+export const { addUserId } = authSlice.actions;
 
 export const selectUserId = (state: RootState) => state.auth.user.id;
 export const selectUserEmail = (state: RootState) => state.auth.user.email;

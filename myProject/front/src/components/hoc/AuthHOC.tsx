@@ -8,7 +8,7 @@ import { selectUserAuthorized, selectUserRegistered } from '../../store/slice/us
 const AuthHOC: React.FC = ({ children }) => {
   const user = useAppSelector(selectUserId);
 
-  if (true) {
+  if (user) {
     return <>{children}</>;
   }
 

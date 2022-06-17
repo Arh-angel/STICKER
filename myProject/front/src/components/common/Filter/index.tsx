@@ -13,18 +13,18 @@ const Filter = () => {
       <div className={style.filterWrapperCheckbox}>
         <div className={style.filterCategory}>
           <p className={style.filterTitle}>Категория</p>
-          <Checkbox text="Автомобили" textLink={null} checked />
-          <Checkbox text="Аксессуары" textLink={null} checked={false} />
-          <Checkbox text="Одежда" textLink={null} checked={false} />
-          <Checkbox text="Мебель" textLink={null} checked={false} />
-          <Checkbox text="Спорт" textLink={null} checked={false} />
-          <Checkbox text="Техника" textLink={null} checked={false} />
-          <Checkbox text="Товары для дома" textLink={null} checked={false} />
+          <Checkbox text="Автомобили" textLink={null} checked handlerErMessage={() => null} />
+          <Checkbox text="Аксессуары" textLink={null} checked={false} handlerErMessage={() => null} />
+          <Checkbox text="Одежда" textLink={null} checked={false} handlerErMessage={() => null} />
+          <Checkbox text="Мебель" textLink={null} checked={false} handlerErMessage={() => null} />
+          <Checkbox text="Спорт" textLink={null} checked={false} handlerErMessage={() => null} />
+          <Checkbox text="Техника" textLink={null} checked={false} handlerErMessage={() => null} />
+          <Checkbox text="Товары для дома" textLink={null} checked={false} handlerErMessage={() => null} />
         </div>
         <div className={style.filterPublished}>
           <p className={style.filterTitle}>Опубликовано</p>
-          <Checkbox text="Да" textLink={null} checked />
-          <Checkbox text="Нет" textLink={null} checked={false} />
+          <Checkbox text="Да" textLink={null} checked handlerErMessage={() => null} />
+          <Checkbox text="Нет" textLink={null} checked={false} handlerErMessage={() => null} />
         </div>
       </div>
       <div className={style.filterBtn}>

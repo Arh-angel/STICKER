@@ -76,6 +76,8 @@ class UserController {
 
       const userData = await userService.refresh(refreshToken);
 
+      console.log('this point', userData)
+
       h.state('refreshToken', userData.refreshToken, {
         ttl: 30 * 24 * 60 * 60 *1000,
         isHttpOnly: true

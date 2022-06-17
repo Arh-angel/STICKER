@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import RegistrationPage from '../../components/pages/RegistrationPage';
 
-import { selectUserEmail, selectUserFirstName, selectUserLastName, selectUserPassword, selectUserRegistered, userAuthorized, userRegistered, selectAgreementStatus } from '../../store/slice/userSlice/userSlice';
+import { selectUserEmail, selectUserFirstName, selectUserLastName, selectUserPassword, selectUserRegistered, userAuthorized, userRegistered, selectAgreementStatus, selectAuthorizationErrorStatus } from '../../store/slice/userSlice/userSlice';
 import { registration } from '../../store/slice/authSlice/authSlice';
 
 const RegistrationContainer = () => {
@@ -20,6 +20,7 @@ const RegistrationContainer = () => {
   const userPassword = useAppSelector(selectUserPassword);
   const userReg = useAppSelector(selectUserRegistered);
   const userAgreement = useAppSelector(selectAgreementStatus);
+  const authorizationErrorStatus = useAppSelector(selectAuthorizationErrorStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -44,7 +45,7 @@ const RegistrationContainer = () => {
   }, [pass, repeatPass]);
 
   const setUserRegistered = async () => {
-    if (userName && userLastName && userEmail && userPassword && userAgreement && pasMatch) {
+    if (userName && userLastName && userEmail && userPassword && userAgreement && pasMatch && !authorizationErrorStatus) {
       setErMessage('');
       dispatch(userRegistered(true));
       dispatch(userAuthorized(true));
@@ -52,6 +53,7 @@ const RegistrationContainer = () => {
       navigate('/', { state: { userReg } });
     } else {
       setErMessage('Заполните обязательные поля');
+      setTimeout(() => setErMessage(''), 5000);
     }
   };
 

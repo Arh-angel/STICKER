@@ -23,7 +23,6 @@ const Input = ({
 
   const isRegistered = useAppSelector(selectUserRegistered);
   const isAuthorized = useAppSelector(selectUserAuthorized);
-  const userEmail = useAppSelector(selectUserEmail);
 
   const dispatch = useAppDispatch();
 
@@ -33,7 +32,7 @@ const Input = ({
 
   useEffect(() => {
     handlerErMessage(erMessage);
-  }, [erMessage]);
+  }, [currentValue, valid]);
 
   useEffect(() => {
     if (!isAuthorized) {
@@ -60,19 +59,22 @@ const Input = ({
         setErMessage('');
         dispatch(authorizationErrorStatus(false));
       }
+    } else {
+      setValid(true);
+      setErMessage('');
     }
   }, [currentValue]);
 
   useEffect(() => {
-    if (currentValue.length > 0) {
-      if (!isRegistered) {
-        if (id === 'name' && valid) {
+    if (currentValue.length > 1) {
+      if (!isRegistered && valid) {
+        if (id === 'name') {
           dispatch(addFirstName(currentValue));
-        } else if (id === 'lastName' && valid) {
+        } else if (id === 'lastName') {
           dispatch(addLastName(currentValue));
-        } else if (id === 'age' && valid) {
+        } else if (id === 'age') {
           dispatch(addAge(currentValue));
-        } else if (id === 'email' && valid) {
+        } else if (id === 'email') {
           dispatch(addEmail(currentValue));
         }
       }

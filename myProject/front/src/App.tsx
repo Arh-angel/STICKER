@@ -13,8 +13,8 @@ import AdsContainer from './containers/AdsContainer';
 import ProductEditingContainer from './containers/ProductEditingContainer';
 import ErContainer from './containers/ErContainer';
 import ProductContainer from './containers/ProductContainer';
-import { useAppDispatch } from './hooks/storeHooks';
-import { checkAuth } from './store/slice/authSlice/authSlice';
+import { useAppDispatch, useAppSelector } from './hooks/storeHooks';
+import { checkAuth, selectUserId } from './store/slice/authSlice/authSlice';
 
 const App = () => {
   const dispatch = useAppDispatch();

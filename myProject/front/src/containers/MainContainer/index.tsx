@@ -13,32 +13,30 @@ const MainContainer = () => {
 
   const { category } = useParams();
 
-  console.log(category);
-
   useEffect(() => {
     dispatch(getAds);
     setAds(adsElementary);
   }, []);
 
-  useEffect(() => {
-    if (category === 'cars') {
-      dispatch(getCategoryAd('Автомобили'));
-    } else if (category === 'accessories') {
-      dispatch(getCategoryAd('Аксессуары'));
-    } else if (category === 'furniture') {
-      dispatch(getCategoryAd('Мебель'));
-    } else if (category === 'clothing') {
-      dispatch(getCategoryAd('Одежда'));
-    } else if (category === 'sport') {
-      dispatch(getCategoryAd('Спорт'));
-    } else if (category === 'technics') {
-      dispatch(getCategoryAd('Техника'));
-    } else if (category === 'forHome') {
-      dispatch(getCategoryAd('Товары для дома'));
-    } else {
-      dispatch(getAds());
-    }
-  }, [category]);
+  // useEffect(() => {
+  //   if (category === 'cars') {
+  //     dispatch(getCategoryAd('Автомобили'));
+  //   } else if (category === 'accessories') {
+  //     dispatch(getCategoryAd('Аксессуары'));
+  //   } else if (category === 'furniture') {
+  //     dispatch(getCategoryAd('Мебель'));
+  //   } else if (category === 'clothing') {
+  //     dispatch(getCategoryAd('Одежда'));
+  //   } else if (category === 'sport') {
+  //     dispatch(getCategoryAd('Спорт'));
+  //   } else if (category === 'technics') {
+  //     dispatch(getCategoryAd('Техника'));
+  //   } else if (category === 'forHome') {
+  //     dispatch(getCategoryAd('Товары для дома'));
+  //   } else {
+  //     dispatch(getAds());
+  //   }
+  // }, [category]);
 
   return (
     <MainPage ads={ads} />

@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { useAppDispatch } from '../hooks/storeHooks';
 import { AuthResponse } from '../models/response/AuthResponse';
+import { addUserId } from '../store/slice/authSlice/authSlice';
 
 export const API_URL = 'http://localhost:3001/';
 
@@ -23,9 +25,13 @@ apiAxios.interceptors.response.use((config) => config, async (error) => {
     // eslint-disable-next-line no-underscore-dangle
     originalRequest._isRetry = true;
     try {
+      const dispatch = useAppDispatch();
+
       const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, { withCredentials: true });
 
       localStorage.setItem('token', response.data.accessToken);
+
+      dispatch(addUserId(response.data.user.id));
 
       return apiAxios.request(originalRequest);
     } catch (e:any) {

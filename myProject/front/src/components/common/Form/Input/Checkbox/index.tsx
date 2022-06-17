@@ -10,12 +10,14 @@ import style from './Checkbox.module.scss';
 type CheckboxType = {
   text: string | null,
   textLink: string | null,
-  checked: boolean
+  checked: boolean,
+  handlerErMessage: (value:string) => void | null
 }
 
 const Checkbox = (props: CheckboxType) => {
-  const { text, textLink, checked } = props;
+  const { text, textLink, checked, handlerErMessage } = props;
   const [checkedValue, setCheckedValue] = useState(false);
+  const [erMessage, setErMessage] = useState('');
 
   const dispatch = useAppDispatch();
 
@@ -24,9 +26,15 @@ const Checkbox = (props: CheckboxType) => {
   }, []);
 
   useEffect(() => {
+    handlerErMessage(erMessage);
+  }, [checkedValue]);
+
+  useEffect(() => {
     if (checkedValue) {
+      setErMessage('Примите условия');
       dispatch(addAgreementStatus(true));
     } else {
+      setErMessage('');
       dispatch(addAgreementStatus(false));
     }
   }, [checkedValue]);

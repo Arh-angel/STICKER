@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import UserService from '../../../services/UserService';
 import { RootState } from '../../store';
 
 export interface UserState {
@@ -8,7 +9,7 @@ export interface UserState {
   email: string;
   password: string; // временно, нужно настроить валидацию формы
   agreement: boolean;
-  userRole: string;
+  role: string;
   userRegistered: boolean;
   userAuthorized: boolean;
   authorizationErrorStatus: boolean
@@ -21,7 +22,7 @@ const initialState: UserState = {
   email: '',
   password: '',
   agreement: true,
-  userRole: '',
+  role: '',
   userRegistered: false,
   userAuthorized: false,
   authorizationErrorStatus: false
@@ -49,8 +50,8 @@ export const userSlice = createSlice({
     addAgreementStatus: (state, action: PayloadAction<boolean>) => {
       state.agreement = action.payload;
     },
-    addUserRole: (state, action: PayloadAction<string>) => {
-      state.userRole = action.payload;
+    addRole: (state, action: PayloadAction<string>) => {
+      state.role = action.payload;
     },
     userRegistered: (state, action: PayloadAction<boolean>) => {
       state.userRegistered = action.payload;
@@ -75,6 +76,6 @@ export const selectUserRegistered = (state: RootState) => state.user.userRegiste
 export const selectUserAuthorized = (state: RootState) => state.user.userAuthorized;
 export const selectAuthorizationErrorStatus = (state: RootState) => state.user.authorizationErrorStatus;
 export const selectAgreementStatus = (state: RootState) => state.user.agreement;
-export const selectUserRole = (state: RootState) => state.user.userRole;
+export const selectRole = (state: RootState) => state.user.role;
 
 export default userSlice.reducer;

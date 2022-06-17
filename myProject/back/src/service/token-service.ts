@@ -1,6 +1,18 @@
 import { TokenModel } from '../models/token-model';
 const Jwt = require('@hapi/jwt');
 
+const verifyToken = (artifact, secret, options = {}) => {
+  try {
+      Jwt.token.verify(artifact, secret, options);
+      return { isValid: true };
+  }
+  catch (err) {
+      return {
+          isValid: false,
+          error: err.message
+      };
+  }
+};
 class TokenService {
   generateTokens(payload) {
     
@@ -16,7 +28,13 @@ class TokenService {
   validateAccessToken(token) {
     try {
       const decodedToken = Jwt.token.decode(token);
-      const userData = Jwt.token.verify(decodedToken, process.env.JWT_ACCESS_SECRET);
+
+      const userData = verifyToken(decodedToken, process.env.JWT_ACCESS_SECRET);
+
+      if (!userData.isValid) {
+        throw new Error(userData.error);
+      }
+
       return decodedToken.decoded.payload;
     } catch(e) {
       console.log(e.message)
@@ -27,7 +45,12 @@ class TokenService {
   validateRefreshToken(token) {
     try {
       const decodedToken = Jwt.token.decode(token);
-      const userData = Jwt.token.verify(decodedToken, process.env.JWT_REFRESH_SECRET);
+      const userData = verifyToken(decodedToken, process.env.JWT_REFRESH_SECRET);
+
+      if (!userData.isValid) {
+        throw new Error(userData.error);
+      }
+
       return decodedToken.decoded.payload;
     } catch(e) {
       return null;
