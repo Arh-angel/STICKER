@@ -4,7 +4,7 @@ import { IAd } from '../../../models/IAd';
 import AdsService from '../../../services/AdsService';
 
 export const create = createAsyncThunk(
-  'user/create',
+  'ads/create',
   // eslint-disable-next-line consistent-return
   async (userData: any, { rejectWithValue }) => {
     try {
@@ -20,7 +20,7 @@ export const create = createAsyncThunk(
 );
 
 export const change = createAsyncThunk(
-  'user/change',
+  'ads/change',
   // eslint-disable-next-line consistent-return
   async (userData: any, { rejectWithValue }) => {
     try {
@@ -36,7 +36,7 @@ export const change = createAsyncThunk(
 );
 
 export const getAds = createAsyncThunk(
-  'user/getAds',
+  'ads/getAds',
   // eslint-disable-next-line consistent-return
   async () => {
     try {
@@ -50,7 +50,7 @@ export const getAds = createAsyncThunk(
 );
 
 export const getUserAds = createAsyncThunk(
-  'user/getUserAds',
+  'ads/getUserAds',
   // eslint-disable-next-line consistent-return
   async (userData: any, { rejectWithValue }) => {
     try {
@@ -66,7 +66,7 @@ export const getUserAds = createAsyncThunk(
 );
 
 export const searchAds = createAsyncThunk(
-  'user/searchAds',
+  'ads/searchAds',
   // eslint-disable-next-line consistent-return
   async (userData: any, { rejectWithValue }) => {
     try {
@@ -82,7 +82,7 @@ export const searchAds = createAsyncThunk(
 );
 
 export const getCategoryAd = createAsyncThunk(
-  'user/getCategoryAd',
+  'ads/getCategoryAd',
   // eslint-disable-next-line consistent-return
   async (userData: any, { rejectWithValue }) => {
     try {
@@ -98,7 +98,7 @@ export const getCategoryAd = createAsyncThunk(
 );
 
 export const getAd = createAsyncThunk(
-  'user/getAd',
+  'ads/getAd',
   // eslint-disable-next-line consistent-return
   async (userData: any, { rejectWithValue }) => {
     try {
@@ -114,7 +114,7 @@ export const getAd = createAsyncThunk(
 );
 
 export const deleteAd = createAsyncThunk(
-  'user/deleteAd',
+  'ads/deleteAd',
   // eslint-disable-next-line consistent-return
   async (userData: any, { rejectWithValue }) => {
     try {

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthPage from '../../components/pages/AuthPage';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
-import { login } from '../../store/slice/authSlice/authSlice';
-import { authorizationErrorStatus, selectAuthorizationErrorStatus, selectRole, selectUserAuthorized, selectUserEmail, selectUserPassword, userAuthorized } from '../../store/slice/userSlice/userSlice';
+import { login, selectAuthError, selectUserId } from '../../store/slice/authSlice/authSlice';
+import { getUser, selectRole, selectUserAuthorized } from '../../store/slice/userSlice/userSlice';
 
 const AuthContainer = () => {
   const [enteredEmail, setEnteredEmail] = useState('');
@@ -13,10 +13,9 @@ const AuthContainer = () => {
 
   const [role, setRole] = useState('');
 
-  const authErrorStatus = useAppSelector(selectAuthorizationErrorStatus);
   const userAuth = useAppSelector(selectUserAuthorized);
-  const userEmail = useAppSelector(selectUserEmail);
-  const userPassword = useAppSelector(selectUserPassword);
+  const userId = useAppSelector(selectUserId);
+  const authError = useAppSelector(selectAuthError);
   const userRole = useAppSelector(selectRole);
 
   const dispatch = useAppDispatch();
@@ -31,28 +30,29 @@ const AuthContainer = () => {
   };
 
   useEffect(() => {
+    if (userId) {
+      dispatch(getUser(userId));
+    }
+    setRole(userRole);
+    console.log(role);
+  }, [userId]);
+
+  useEffect(() => {
+    console.log(role);
     setRole(userRole);
   }, [userRole]);
 
-  const handler = async () => {
-    if (!authErrorStatus && userEmail === enteredEmail && userPassword === enteredPassword) {
-      dispatch(userAuthorized(true));
-      setErMessage('');
-      await dispatch(login({ enteredEmail, enteredPassword }));
-      if (role === 'admin') {
-        navigate('/ads', { state: { userAuth } });
-      } else if (role === 'user') {
-        navigate('/', { state: { userAuth } });
-      }
-    } else if (userPassword !== enteredPassword) {
-      setErMessage('Некорректный пароль');
-      dispatch(authorizationErrorStatus(true));
-    } else if (userEmail !== enteredEmail) {
-      setErMessage('Пользователем с указанным email не существует');
-      dispatch(authorizationErrorStatus(true));
-    } else {
-      setErMessage('Заполните обязательные поля');
-      dispatch(authorizationErrorStatus(true));
+  useEffect(() => {
+    setErMessage(authError);
+  }, [authError]);
+
+  const handler = () => {
+    dispatch(login({ enteredEmail, enteredPassword }));
+
+    if (role === 'admin') {
+      navigate('/ads');
+    } else if (role === 'user') {
+      navigate('/');
     }
   };
 

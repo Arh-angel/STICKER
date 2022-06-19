@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/storeHooks';
-import { addAge, addEmail, addFirstName, addLastName, authorizationErrorStatus, selectUserAuthorized, selectUserEmail, selectUserRegistered, userRegistered } from '../../../../store/slice/userSlice/userSlice';
+import { addEmail, addFirstName, addLastName, authorizationErrorStatus, selectUserAuthorized, selectUserEmail, selectUserRegistered, userRegistered } from '../../../../store/slice/userSlice/userSlice';
 
 import style from './Input.module.scss';
 
@@ -46,10 +46,6 @@ const Input = ({
         setValid(false);
         setErMessage('Имя и фамилия должны быть не менее 2 и не более 25 символов');
         dispatch(authorizationErrorStatus(true));
-      } else if (id === 'age' && +currentValue < 16 && +currentValue > 100) {
-        setValid(false);
-        setErMessage('Возраст должен быть не менее 16 и не более 100 лет');
-        dispatch(authorizationErrorStatus(true));
       } else if (id === 'email' && !currentValue.match(regEmail)) {
         setValid(false);
         setErMessage('Некорректный формат адреса электронной почты');
@@ -72,8 +68,6 @@ const Input = ({
           dispatch(addFirstName(currentValue));
         } else if (id === 'lastName') {
           dispatch(addLastName(currentValue));
-        } else if (id === 'age') {
-          dispatch(addAge(currentValue));
         } else if (id === 'email') {
           dispatch(addEmail(currentValue));
         }

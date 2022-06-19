@@ -1,9 +1,9 @@
 import { AxiosResponse } from 'axios';
-import { IUser } from '../models/IUser';
+import { IAboutUser } from '../models/IAboutUser';
 import apiAxios from '../network';
 
 export default class UserService {
-  static async getUser(userId:string): Promise<AxiosResponse<IUser>> {
-    return apiAxios.get<IUser>(`/users/${userId}`);
+  static async getUser(userId:string): Promise<AxiosResponse<IAboutUser>> {
+    return apiAxios.get<IAboutUser>(`/users/${userId}`);
   }
 }

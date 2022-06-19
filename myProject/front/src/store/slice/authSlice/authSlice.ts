@@ -1,10 +1,16 @@
-import axios from 'axios';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import axios, { AxiosError } from 'axios';
+import { AnyAction, createAsyncThunk, createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit';
+import { RejectedActionFromAsyncThunk } from '@reduxjs/toolkit/dist/matchers';
 import { IUser } from '../../../models/IUser';
 import AuthService from '../../../services/AuthService';
 import { AuthResponse } from '../../../models/response/AuthResponse';
 import { API_URL } from '../../../network';
 import { RootState } from '../../store';
+
+interface ValidationErrors {
+  errorMessage: string
+  field_errors: Record<string, string>
+}
 
 export const registration = createAsyncThunk(
   'user/registration',
@@ -35,8 +41,13 @@ export const login = createAsyncThunk(
       localStorage.setItem('token', response.data.accessToken);
 
       return response.data.user;
-    } catch (e:any) {
-      rejectWithValue(e.response.data);
+    } catch (err:any) {
+      const error: AxiosError<ValidationErrors> = err;
+      if (!error.response) {
+        throw err;
+      }
+
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -72,7 +83,8 @@ export const checkAuth = createAsyncThunk(
 );
 
 export interface UserState {
-  user: IUser
+  user: IUser,
+  error: string
 }
 
 const initialState: UserState = {
@@ -80,7 +92,8 @@ const initialState: UserState = {
     id: '',
     email: '',
     isActivated: false
-  }
+  },
+  error: ''
 };
 
 export const authSlice = createSlice({
@@ -104,6 +117,9 @@ export const authSlice = createSlice({
         ...action.payload
       };
     });
+    builder.addCase(login.rejected, (state, action: { payload:any }) => {
+      state.error = action.payload.message;
+    });
     builder.addCase(logout.fulfilled, (state) => {
       state.user = {} as IUser;
     });
@@ -115,5 +131,6 @@ export const { addUserId } = authSlice.actions;
 export const selectUserId = (state: RootState) => state.auth.user.id;
 export const selectUserEmail = (state: RootState) => state.auth.user.email;
 export const selectUserIsActivated = (state: RootState) => state.auth.user.isActivated;
+export const selectAuthError = (state: RootState) => state.auth.error;
 
 export default authSlice.reducer;

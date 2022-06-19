@@ -5,6 +5,7 @@ import tokenService from './token-service';
 import { UserModel } from '../models/user-model';
 import UserDto from '../dtos/user-dto';
 import {ApiError} from '../exceptions/api-error';
+import AboutUserDto from '../dtos/about-user-dto';
 
 class UserService {
   async registration(name, lastName, email, password) {
@@ -118,7 +119,9 @@ class UserService {
       throw new Error('Пользователь не найден')
     }
 
-    return user
+    const userDto = new AboutUserDto(user);
+
+    return userDto
   } 
 }
 

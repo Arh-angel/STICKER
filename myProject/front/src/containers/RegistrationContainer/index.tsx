@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import RegistrationPage from '../../components/pages/RegistrationPage';
 
-import { selectUserEmail, selectUserFirstName, selectUserLastName, selectUserPassword, selectUserRegistered, userAuthorized, userRegistered, selectAgreementStatus, selectAuthorizationErrorStatus } from '../../store/slice/userSlice/userSlice';
+import { selectUserEmail, selectUserLastName, selectUserPassword, selectUserRegistered, userAuthorized, userRegistered, selectAgreementStatus, selectAuthorizationErrorStatus, selectUserName } from '../../store/slice/userSlice/userSlice';
 import { registration } from '../../store/slice/authSlice/authSlice';
 
 const RegistrationContainer = () => {
@@ -14,7 +14,7 @@ const RegistrationContainer = () => {
 
   const [erMessage, setErMessage] = useState('');
 
-  const userName = useAppSelector(selectUserFirstName);
+  const userName = useAppSelector(selectUserName);
   const userLastName = useAppSelector(selectUserLastName);
   const userEmail = useAppSelector(selectUserEmail);
   const userPassword = useAppSelector(selectUserPassword);
