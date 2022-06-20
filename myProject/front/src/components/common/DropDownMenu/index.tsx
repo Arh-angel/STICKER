@@ -1,26 +1,24 @@
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-closing-tag-location */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../../hooks/storeHooks';
-import { logout } from '../../../store/slice/authSlice/authSlice';
-import { userAuthorized } from '../../../store/slice/userSlice/userSlice';
+import { useAppDispatch, useAppSelector } from '../../../hooks/storeHooks';
+import { logout, selectUserRole } from '../../../store/slice/authSlice/authSlice';
 
 import style from './DropDownMenu.module.scss';
 
 const DropDownMenu = () => {
-  const [dropDownMenu, setDropDownMenu] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [role, setRole] = useState('');
 
   const dispatch = useAppDispatch();
+  const userRole = useAppSelector(selectUserRole);
 
-  const handler = () => {
-    setDropDownMenu(!dropDownMenu);
-  };
+  useEffect(() => {
+    setRole(userRole);
+  }, [userRole]);
 
-  const userOutput = async () => {
-    await dispatch(logout());
-    dispatch(userAuthorized(false));
+  const userOutput = () => {
+    dispatch(logout());
   };
 
   return (
@@ -49,7 +47,7 @@ const DropDownMenu = () => {
               <p className={style.dropDownMenuText}>Мои обьявдения</p>
             </Link>
           </li>
-          {isAdmin ? <li className={style.dropDownMenuitem}>
+          {role === 'admin' ? <li className={style.dropDownMenuitem}>
             <Link to="/adminPanel">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8.33333 2.5H2.5V8.33333H8.33333V2.5Z" stroke="#2A2F37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

@@ -73,6 +73,7 @@ const AdsPage = (props: AdsPropsType) => {
             </p>
           </div>
           <Button
+            clName={null}
             title="Добавить"
             handler={handlerBtn}
             width="129px"
@@ -102,6 +103,7 @@ const AdsPage = (props: AdsPropsType) => {
         </label>
         <div className={style.searchBtnWrapper}>
         <Button
+          clName={null}
           title="Фильтровать"
           handler={handlerFilterMenu}
           width="153px"
@@ -128,6 +130,7 @@ const AdsPage = (props: AdsPropsType) => {
             {totalPages}
           </p>
           <Button
+            clName={null}
             title={null}
             handler={prevPage}
             width={null}
@@ -142,6 +145,7 @@ const AdsPage = (props: AdsPropsType) => {
 <path d="M6.00016 0L7.41016 1.41L2.83016 6L7.41016 10.59L6.00016 12L0.000156403 6L6.00016 0Z" fill={firstPagePag ? 'rgba(29, 29, 29, .6)' : '#1D1D1D'} />
                   </svg>} />
           <Button
+            clName={null}
             title={null}
             handler={nextPage}
             width={null}
@@ -159,6 +163,7 @@ const AdsPage = (props: AdsPropsType) => {
         </div>
         <div className={style.aboutAds}>
             <Button
+              clName={null}
               title="Название объявления"
               handler={() => null}
               width="auto"

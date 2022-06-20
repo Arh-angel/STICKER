@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-indent */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Radio } from 'antd';
 import AdminMenu from '../../common/AsideMenu';
@@ -16,6 +16,9 @@ import InputInfo from '../../common/Form/Input/InputInfo';
 import Map from '../../common/Map';
 import Textarea from '../../common/Form/Input/Textarea';
 import { IAd } from '../../../models/IAd';
+import { useAppSelector } from '../../../hooks/storeHooks';
+import { selectUserRole } from '../../../store/slice/authSlice/authSlice';
+import { selectIdAd } from '../../../store/slice/adsSlice/adsSlice';
 
 type ProductEditingPageProps = {
   handlerBtnBack: () => void,
@@ -25,13 +28,20 @@ type ProductEditingPageProps = {
 const ProductEditingPage = (props: ProductEditingPageProps) => {
   const { handlerBtnBack, dataAd } = props;
 
-  const [role, setRole] = useState('Пользователь');
+  const [id, setId] = useState('');
+
+  const adId = useAppSelector(selectIdAd);
+
+  useEffect(() => {
+    setId(adId);
+  }, [adId]);
 
   return (
     <div className={style.container}>
       <AdminMenu />
       <Form title={null} supTitle={null}>
       <Button
+        clName={null}
         title="Вернуться назад"
         handler={handlerBtnBack}
         width="auto"
@@ -47,7 +57,7 @@ const ProductEditingPage = (props: ProductEditingPageProps) => {
               </svg>} />
         <div className={style.productEditingHeaderBlock}>
           <h3 className={style.productEditingHeaderBlockTitle}>{dataAd.nameAd}</h3>
-          <Button title="Сохранить" handler={() => null} width="147px" height="40px" background="#3A95FF" textColor="#FFFFFF" fontSize="14px" fontWeight="500" margin={null} borderRadius={null} icon={null} />
+          <Button clName={null} title="Сохранить" handler={() => null} width="147px" height="40px" background="#3A95FF" textColor="#FFFFFF" fontSize="14px" fontWeight="500" margin={null} borderRadius={null} icon={null} />
         </div>
         <div className={style.productEditingBlock}>
           <InputInfo title="Название товара" id="nameProduct" placeholder="Чепчик" type="text" />
@@ -58,9 +68,9 @@ const ProductEditingPage = (props: ProductEditingPageProps) => {
             </div>
           </div>
           <div className={style.productEditingBlockDatePhone}>
-            {role === 'Админ' ? <div className={style.productEditingBlockDate}>
+            {id ? <div className={style.productEditingBlockDate}>
               <InputInfo title="Дата публикации" id="datePublish" placeholder="12.04.2022" type="text" />
-                                </div> : ''}
+                  </div> : ''}
             <div className={style.productEditingBlockPhone}>
               <InputInfo title="Телефон" id="tel" placeholder="+7 (_ _ _) _ _ _ - _ _ - _ _" type="text" />
             </div>
@@ -74,7 +84,7 @@ const ProductEditingPage = (props: ProductEditingPageProps) => {
           </div>
           <InputInfo title="Местоположение" id="location" placeholder="Введите адрес" type="text" />
           <Map />
-          <div className={style.productEditingBlockPublication}>
+          {id ? <div className={style.productEditingBlockPublication}>
             <p>Публикация</p>
             <div className={style.productEditingBlockPublicationBtn}>
               <Radio.Group name="radiogroup" defaultValue={1} className={style.productEditingBlockBtn}>
@@ -82,6 +92,7 @@ const ProductEditingPage = (props: ProductEditingPageProps) => {
                 <Radio value={2}>Скрыть</Radio>
               </Radio.Group>
               <Button
+                clName={null}
                 title="Сбросить выбор"
                 handler={() => null}
                 width="auto"
@@ -94,7 +105,7 @@ const ProductEditingPage = (props: ProductEditingPageProps) => {
                 borderRadius={null}
                 icon={null} />
             </div>
-          </div>
+                </div> : '' }
         </div>
       </Form>
     </div>

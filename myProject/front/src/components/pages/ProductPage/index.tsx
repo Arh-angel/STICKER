@@ -35,6 +35,7 @@ const ProductPage = (props: ProductPagePropsType) => {
   return (
     <div className={style.container}>
       <Button
+        clName={null}
         title={null}
         handler={handlerBtnBack}
         width={null}
@@ -91,7 +92,7 @@ const ProductPage = (props: ProductPagePropsType) => {
 P
             </p>
             <div className={style.number}>
-              <Button title="Показать номер" handler={handlerPhonNumber} width="135px" height="40px" background="#3A95FF" textColor="#FFFFFF" fontSize="14px" fontWeight="500" margin={null} borderRadius="4px" icon={null} />
+              <Button clName={null} title="Показать номер" handler={handlerPhonNumber} width="135px" height="40px" background="#3A95FF" textColor="#FFFFFF" fontSize="14px" fontWeight="500" margin={null} borderRadius="4px" icon={null} />
               {phoneView ? <Link to={`tel: ${currentAd.phoneNumber}`}>{currentAd.phoneNumber}</Link> : ''}
             </div>
           </div>

@@ -9,34 +9,39 @@ import SearchInput from '../Form/Input/SearchInput';
 import Burger from '../Burger';
 import DropDownMenu from '../DropDownMenu';
 import { useAppDispatch, useAppSelector } from '../../../hooks/storeHooks';
-import { selectAuthorizationErrorStatus, selectUserAuthorized, selectUserRegistered } from '../../../store/slice/userSlice/userSlice';
 import { searchAds } from '../../../store/slice/adsSlice/adsSlice';
+import { selectUserId, selectUserRole } from '../../../store/slice/authSlice/authSlice';
 
 const Header = () => {
-  const [admin, setAdmin] = useState(false);
+  const [role, setRole] = useState('user');
   const [searchValue, setSearchValue] = useState('');
   const [logInLogOut, setLogInLogOut] = useState(false);
   const [path, setPath] = useState('');
 
-  const userAuth = useAppSelector(selectUserAuthorized);
+  const userId = useAppSelector(selectUserId);
+  const userRole = useAppSelector(selectUserRole);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!userAuth) {
+    setRole(userRole);
+  }, [userRole]);
+
+  useEffect(() => {
+    if (!userId) {
       setPath('/auth');
     } else {
       setPath('/ads');
     }
-  }, [userAuth]);
+  }, [userId]);
 
   useEffect(() => {
-    if (userAuth) {
+    if (userId) {
       setLogInLogOut(true);
     } else {
       setLogInLogOut(false);
     }
-  }, [userAuth]);
+  }, [userId]);
 
   const handlerSearchValue = (value:string) => {
     setSearchValue(value);
@@ -65,7 +70,7 @@ const Header = () => {
             </defs>
           </svg>
         </Link>
-        {!admin ? <div className={style.searchProductInput}>
+        {role === 'user' || role === '' ? <div className={style.searchProductInput}>
           <SearchInput
             id="search"
             placeholder={<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,10 +81,10 @@ const Header = () => {
                          </svg>}
             type="text"
             handlerSearchValue={handlerSearchValue} />
-          <Button title="Искать" handler={searchResults} width="96px" height="36px" background={null} textColor={null} fontSize={null} fontWeight={null} margin={null} borderRadius="0 4px 4px 0" icon={null} />
-                  </div> : ''}
+          <Button clName={null} title="Искать" handler={searchResults} width="96px" height="36px" background={null} textColor={null} fontSize={null} fontWeight={null} margin={null} borderRadius="0 4px 4px 0" icon={null} />
+                                          </div> : ''}
         <div className={style.wrapperBtnAccaunt}>
-          {!admin ? <Link to="/productEditing" className={style.submitAdvertisement}><Button title="Подать обьявление" handler={() => { }} width="calc(170px + (180 - 170) * ((100vw - 768px) / (1920 - 768)))" height="36px" background="#FFAC28" textColor="#1D1D1D" fontSize={null} fontWeight={null} margin={null} borderRadius={null} icon={null} /></Link> : '' }
+          {role === 'user' || role === '' ? <Link to="/ads/productEditing" className={style.submitAdvertisement}><Button clName={null} title="Подать обьявление" handler={() => {}} width="calc(170px + (180 - 170) * ((100vw - 768px) / (1920 - 768)))" height="36px" background="#FFAC28" textColor="#1D1D1D" fontSize={null} fontWeight={null} margin={null} borderRadius={null} icon={null} /></Link> : '' }
           <div className={style.profileContainer}>
             {logInLogOut ? <DropDownMenu /> : <Link className={style.authLink} to={path}>Войти</Link>}
           </div>

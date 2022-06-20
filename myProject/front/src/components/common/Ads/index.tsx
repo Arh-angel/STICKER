@@ -27,6 +27,7 @@ const Ads = (props: AdsType) => {
       <p className={style.productItemPublication}>{dataAd.published}</p>
       <div className={style.productItemBtnWrapper}>
         <Button
+          clName={null}
           title={null}
           handler={handlerPublishMenu}
           width={null}

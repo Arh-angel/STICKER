@@ -21,7 +21,7 @@ const ProductEditingContainer = () => {
   }, []);
 
   const handlerBtnBack = () => {
-    navigate('/ads');
+    navigate(-1);
   };
 
   return (

@@ -21,6 +21,7 @@ const Select = (props: SelectPropsType) => {
     <div className={style.container}>
       <p>{title}</p>
       <Button
+        clName={null}
         title="Автомобили"
         handler={handlerOpenSelect}
         width="100%"

@@ -8,10 +8,11 @@ interface UsePaginationProps {
 interface UsePaginationReturn {
   page: number;
   totalPages: number;
-  firstContentIndex: number;
-  lastContentIndex: number;
+  setPage: (page: number) => void;
   nextPage: () => void;
   prevPage: () => void;
-  setPage: (page: number) => void;
+  firstContentIndex: number;
+  lastContentIndex: number;
+  gaps: { before: boolean; paginationGroup: number[]; after: boolean };
 }
 export type UsePagination = (UsePaginationProps) => (UsePaginationReturn);

@@ -41,6 +41,7 @@ const ProductList = (props: ProductListPropsType) => {
       </div>
       <div className={style.BtnLoadMore}>
         <Button
+          clName={null}
           title="Загрузить еще"
           handler={handlerBtn}
           width="242px"

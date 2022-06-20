@@ -10,13 +10,13 @@ import style from './AuthPage.module.scss';
 
 type AuthPageType = {
   handler: () => void | null | Promise<void>,
-  writeEmail: (value:string) => void | null,
-  writePassword: (value:string) => void | null,
+  trackEmail: (value:string) => void | null,
+  trackPassword: (value:string) => void | null,
   erMessage: string
 }
 
 const AuthPage = (props: AuthPageType) => {
-  const { handler, writeEmail, writePassword, erMessage } = props;
+  const { handler, trackEmail, trackPassword, erMessage } = props;
 
   const [erMas, setErMas] = useState('');
 
@@ -31,11 +31,11 @@ const AuthPage = (props: AuthPageType) => {
   return (
     <Form title="Hello, world!" supTitle="Пройдите авторизацию">
       <ButtonAuthReg />
-      <Input id="email" placeholder="Email" type="text" writeEmail={writeEmail} handlerErMessage={handlerErMessage} />
-      <PasswordInput id="password" placeholder="Пароль" type="password" trackPas={() => null} trackRepeatPas={() => null} pasMatch={null} writePassword={writePassword} handlerErMessage={handlerErMessage} />
+      <Input id="email" placeholder="Email" type="text" trackEmail={trackEmail} handlerErMessage={handlerErMessage} trackName={() => null} trackLastName={() => null} />
+      <PasswordInput id="password" placeholder="Пароль" type="password" trackPassword={trackPassword} trackRepeatPassword={() => null} pasMatch={null} handlerErMessage={handlerErMessage} />
       <PasswordRecoveryLink title="Забыли пароль?" />
       {erMas ? <span className={style.erMas}>{erMas}</span> : ''}
-      <Button title="Войти" handler={handler} width="100%" height="48px" background={null} textColor={null} fontSize={null} fontWeight={null} margin="24px 0 0 0" borderRadius={null} icon={null} />
+      <Button clName={null} title="Войти" handler={handler} width="100%" height="48px" background={null} textColor={null} fontSize={null} fontWeight={null} margin="24px 0 0 0" borderRadius={null} icon={null} />
     </Form>
   );
 };

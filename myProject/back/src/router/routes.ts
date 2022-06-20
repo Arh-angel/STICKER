@@ -12,7 +12,7 @@ export default [
         payload: joi.object({
           name: joi.string().required(),
           lastName: joi.string().required(),
-          email: joi.string().required().email({tlds:{allow: false}}),
+          email: joi.string().required().email(),
           password: joi.string().required().min(8),
         }),
       }

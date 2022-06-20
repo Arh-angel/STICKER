@@ -11,14 +11,18 @@ import style from './RegistrationPage.module.scss';
 
 type RegistrationPageType = {
   handler: () => Promise<void> | void | null;
-  trackPas: (value: string) => void;
-  trackRepeatPas: (value: string) => void;
+  trackName: (value: string) => void;
+  trackLastName: (value: string) => void;
+  trackEmail: (value: string) => void;
+  trackPassword: (value: string) => void;
+  trackRepeatPassword: (value: string) => void;
+  trackAgreement: (value: boolean) => void;
   pasMatch: boolean,
   erMessage: string
 }
 
 const RegistrationPage = (props: RegistrationPageType) => {
-  const { handler, trackPas, trackRepeatPas, pasMatch, erMessage } = props;
+  const { handler, trackName, trackLastName, trackEmail, trackPassword, trackRepeatPassword, trackAgreement, pasMatch, erMessage } = props;
 
   const [erMas, setErMas] = useState('');
 
@@ -33,14 +37,14 @@ const RegistrationPage = (props: RegistrationPageType) => {
   return (
     <Form title="Hello, world!" supTitle="Создайте аккаунт">
       <ButtonAuthReg />
-      <Input id="name" placeholder="Имя" type="text" writeEmail={() => null} handlerErMessage={handlerErMessage} />
-      <Input id="lastName" placeholder="Фамилия" type="text" writeEmail={() => null} handlerErMessage={handlerErMessage} />
-      <Input id="email" placeholder="Email" type="text" writeEmail={() => null} handlerErMessage={handlerErMessage} />
-      <PasswordInput id="password" placeholder="Пароль" type="password" trackPas={trackPas} trackRepeatPas={trackRepeatPas} pasMatch={pasMatch} writePassword={() => null} handlerErMessage={handlerErMessage} />
-      <PasswordInput id="repeatPassword" placeholder="Повторите пароль" type="password" trackPas={trackPas} trackRepeatPas={trackRepeatPas} pasMatch={pasMatch} writePassword={() => null} handlerErMessage={handlerErMessage} />
-      <Checkbox text="Принимаю условия" textLink="Пользовательского соглашения" checked handlerErMessage={handlerErMessage} />
+      <Input id="name" placeholder="Имя" type="text" handlerErMessage={handlerErMessage} trackName={trackName} trackLastName={trackLastName} trackEmail={trackEmail} />
+      <Input id="lastName" placeholder="Фамилия" type="text" handlerErMessage={handlerErMessage} trackName={trackName} trackLastName={trackLastName} trackEmail={trackEmail} />
+      <Input id="email" placeholder="Email" type="text" handlerErMessage={handlerErMessage} trackName={trackName} trackLastName={trackLastName} trackEmail={trackEmail} />
+      <PasswordInput id="password" placeholder="Пароль" type="password" trackPassword={trackPassword} trackRepeatPassword={() => null} pasMatch={pasMatch} handlerErMessage={handlerErMessage} />
+      <PasswordInput id="repeatPassword" placeholder="Повторите пароль" type="password" trackPassword={() => null} trackRepeatPassword={trackRepeatPassword} pasMatch={pasMatch} handlerErMessage={handlerErMessage} />
+      <Checkbox text="Принимаю условия" textLink="Пользовательского соглашения" checked handlerErMessage={handlerErMessage} trackAgreement={trackAgreement} />
       {erMas ? <span className={style.erMas}>{erMas}</span> : ''}
-      <Button title="Создать аккаунт" handler={handler} width="100%" height="48px" background={null} textColor={null} fontSize={null} fontWeight={null} margin="24px 0 0 0" borderRadius={null} icon={null} />
+      <Button clName={null} title="Создать аккаунт" handler={handler} width="100%" height="48px" background={null} textColor={null} fontSize={null} fontWeight={null} margin="24px 0 0 0" borderRadius={null} icon={null} />
     </Form>
   );
 };

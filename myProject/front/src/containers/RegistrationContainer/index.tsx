@@ -3,38 +3,52 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import RegistrationPage from '../../components/pages/RegistrationPage';
 
-import { selectUserEmail, selectUserLastName, selectUserPassword, selectUserRegistered, userAuthorized, userRegistered, selectAgreementStatus, selectAuthorizationErrorStatus, selectUserName } from '../../store/slice/userSlice/userSlice';
-import { registration } from '../../store/slice/authSlice/authSlice';
+import { clearErrorMessage, registration, selectAuthError, selectUserRole } from '../../store/slice/authSlice/authSlice';
 
 const RegistrationContainer = () => {
-  const [pass, setPass] = useState('');
+  const [name, setName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [repeatPass, setRepeatPass] = useState('');
+  const [agreement, setAgreement] = useState(false);
+  const [role, setRole] = useState('');
 
   const [pasMatch, setPasMatch] = useState(false);
 
   const [erMessage, setErMessage] = useState('');
 
-  const userName = useAppSelector(selectUserName);
-  const userLastName = useAppSelector(selectUserLastName);
-  const userEmail = useAppSelector(selectUserEmail);
-  const userPassword = useAppSelector(selectUserPassword);
-  const userReg = useAppSelector(selectUserRegistered);
-  const userAgreement = useAppSelector(selectAgreementStatus);
-  const authorizationErrorStatus = useAppSelector(selectAuthorizationErrorStatus);
+  const authError = useAppSelector(selectAuthError);
+  const userRole = useAppSelector(selectUserRole);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const trackPas = (value:string) => {
-    setPass(value);
+  const trackName = (value:string) => {
+    setName(value);
   };
-
-  const trackRepeatPas = (value:string) => {
+  const trackLastName = (value:string) => {
+    setLastName(value);
+  };
+  const trackEmail = (value:string) => {
+    setEmail(value);
+  };
+  const trackPassword = (value:string) => {
+    setPassword(value);
+  };
+  const trackRepeatPassword = (value:string) => {
     setRepeatPass(value);
+  };
+  const trackAgreement = (value:boolean) => {
+    setAgreement(value);
   };
 
   useEffect(() => {
-    if (pass.length > 0 && repeatPass.length > 0) {
-      if (pass === repeatPass) {
+    dispatch(clearErrorMessage());
+  }, []);
+
+  useEffect(() => {
+    if (password.length > 0 && repeatPass.length > 0) {
+      if (password === repeatPass) {
         setPasMatch(true);
       } else {
         setPasMatch(false);
@@ -42,15 +56,27 @@ const RegistrationContainer = () => {
     } else {
       setPasMatch(true);
     }
-  }, [pass, repeatPass]);
+  }, [password, repeatPass]);
 
-  const setUserRegistered = async () => {
-    if (userName && userLastName && userEmail && userPassword && userAgreement && pasMatch && !authorizationErrorStatus) {
-      setErMessage('');
-      dispatch(userRegistered(true));
-      dispatch(userAuthorized(true));
-      await dispatch(registration({ userName, userLastName, userEmail, userPassword }));
-      navigate('/', { state: { userReg } });
+  useEffect(() => {
+    if (userRole) {
+      setRole(userRole);
+    }
+  }, [userRole]);
+
+  useEffect(() => {
+    if (role) {
+      navigate('/');
+    }
+  }, [role]);
+
+  useEffect(() => {
+    setErMessage(authError);
+  }, [authError]);
+
+  const setUserRegistered = () => {
+    if (name && lastName && email && password && pasMatch && agreement) {
+      dispatch(registration({ name, lastName, email, password }));
     } else {
       setErMessage('Заполните обязательные поля');
       setTimeout(() => setErMessage(''), 5000);
@@ -59,7 +85,7 @@ const RegistrationContainer = () => {
 
   return (
     // eslint-disable-next-line max-len
-    <RegistrationPage handler={setUserRegistered} trackPas={trackPas} trackRepeatPas={trackRepeatPas} pasMatch={pasMatch} erMessage={erMessage} />
+    <RegistrationPage handler={setUserRegistered} trackPassword={trackPassword} trackRepeatPassword={trackRepeatPassword} trackName={trackName} trackLastName={trackLastName} trackEmail={trackEmail} trackAgreement={trackAgreement} pasMatch={pasMatch} erMessage={erMessage} />
   );
 };
 

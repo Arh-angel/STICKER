@@ -1,22 +1,20 @@
 /* eslint-disable react/jsx-indent */
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/storeHooks';
-import { addPassword, authorizationErrorStatus, selectUserAuthorized, selectUserPassword, selectUserRegistered, userAuthorized } from '../../../../../store/slice/userSlice/userSlice';
 import style from './PasswordInput.module.scss';
 
 type InputPropsType = {
   id: string;
   placeholder: string;
   type: 'text' | 'password';
-  trackPas: (value: string) => void | null;
-  trackRepeatPas: (value: string) => void | null;
+  trackPassword: (value: string) => void | null;
+  trackRepeatPassword: (value: string) => void | null;
   pasMatch: boolean | null;
-  writePassword: (value:string) => void | null,
   handlerErMessage: (value:string) => void | null
 };
 
 const PasswordInput = ({
-  id, placeholder, type = 'password', trackPas, trackRepeatPas, pasMatch, writePassword, handlerErMessage
+  id, placeholder, type = 'password', trackPassword, trackRepeatPassword, pasMatch, handlerErMessage
 }: InputPropsType) => {
   const regPas = /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}/g;
   const [isVisible, setIsVisible] = useState(false);
@@ -25,9 +23,6 @@ const PasswordInput = ({
   const [valid, setValid] = useState(true);
   const [erMessage, setErMessage] = useState('');
 
-  const userRegistered = useAppSelector(selectUserRegistered);
-  const isAuthorized = useAppSelector(selectUserAuthorized);
-  const userPassword = useAppSelector(selectUserPassword);
   const dispatch = useAppDispatch();
 
   const handler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -43,15 +38,10 @@ const PasswordInput = ({
   }, [currentValue, valid]);
 
   useEffect(() => {
-    if (!userRegistered) {
-      if (id === 'password') {
-        trackPas(currentValue);
-      } else if (id === 'repeatPassword') {
-        trackRepeatPas(currentValue);
-      }
-    }
-    if (!isAuthorized) {
-      writePassword(currentValue);
+    if (id === 'password') {
+      trackPassword(currentValue);
+    } else if (id === 'repeatPassword') {
+      trackRepeatPassword(currentValue);
     }
   }, [currentValue]);
 
@@ -60,20 +50,16 @@ const PasswordInput = ({
       if (!pasMatch && pasMatch !== null) {
         setValid(false);
         setErMessage('Пароли не совпадают');
-        dispatch(authorizationErrorStatus(true));
       } else if (!currentValue.match(regPas) || currentValue.length < 8) {
         setValid(false);
         setErMessage('Пароль должен быть не менее 8 символов и состоять из цифр и латинских букв обоих регистров');
-        dispatch(authorizationErrorStatus(true));
       } else {
         setValid(true);
         setErMessage('');
-        dispatch(authorizationErrorStatus(false));
       }
     } else {
       setValid(true);
       setErMessage('');
-      dispatch(authorizationErrorStatus(false));
     }
   }, [pasMatch, currentValue]);
 
@@ -84,27 +70,6 @@ const PasswordInput = ({
       setCurrentTypeInput('password');
     }
   }, [isVisible]);
-
-  useEffect(() => {
-    if (currentValue.length > 0) {
-      if (!userRegistered) {
-        if (valid) {
-          dispatch(addPassword(currentValue));
-        }
-      }
-      // if (!isAuthorized) {
-      //   if ((id === 'password' || id === 'repeatPassword') && valid) {
-      //     if (currentValue === userPassword) {
-      //       dispatch(authorizationErrorStatus(false));
-      //     } else {
-      //       dispatch(authorizationErrorStatus(true));
-      //     }
-      //   }
-      // }
-    } else {
-      dispatch(authorizationErrorStatus(true));
-    }
-  }, [currentValue, pasMatch, valid]);
 
   const createClassName = () => {
     if (pasMatch === null) {

@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/storeHooks';
-import { addEmail, addFirstName, addLastName, authorizationErrorStatus, selectUserAuthorized, selectUserEmail, selectUserRegistered, userRegistered } from '../../../../store/slice/userSlice/userSlice';
 
 import style from './Input.module.scss';
 
@@ -8,21 +7,20 @@ type InputPropsType = {
   id: string;
   placeholder: string | null;
   type: 'text' | 'password' | 'tel' | 'file';
-  writeEmail: (value:string) => void | null;
-  handlerErMessage: (value:string) => void | null
+  handlerErMessage: (value:string) => void | null;
+  trackName: (value:string) => void | null;
+  trackLastName: (value:string) => void | null;
+  trackEmail: (value:string) => void | null;
 };
 
 const Input = ({
-  id, placeholder, type = 'text', writeEmail, handlerErMessage
+  id, placeholder, type = 'text', handlerErMessage, trackName, trackLastName, trackEmail
 }: InputPropsType) => {
   // eslint-disable-next-line no-useless-escape
   const regEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
   const [currentValue, setCurrentValue] = useState('');
   const [valid, setValid] = useState(true);
   const [erMessage, setErMessage] = useState('');
-
-  const isRegistered = useAppSelector(selectUserRegistered);
-  const isAuthorized = useAppSelector(selectUserAuthorized);
 
   const dispatch = useAppDispatch();
 
@@ -31,60 +29,46 @@ const Input = ({
   };
 
   useEffect(() => {
-    handlerErMessage(erMessage);
+    if (currentValue.length > 1 && valid) {
+      if (id === 'name') {
+        trackName(currentValue);
+      } else if (id === 'lastName') {
+        trackLastName(currentValue);
+      } else if (id === 'email') {
+        trackEmail(currentValue);
+      }
+    } else if (currentValue.length === 0 || !valid) {
+      if (id === 'name') {
+        trackName('');
+      } else if (id === 'lastName') {
+        trackLastName('');
+      } else if (id === 'email') {
+        trackEmail('');
+      }
+    }
   }, [currentValue, valid]);
 
   useEffect(() => {
-    if (!isAuthorized) {
-      writeEmail(currentValue);
-    }
-  }, [currentValue]);
+    handlerErMessage(erMessage);
+  }, [currentValue, valid]);
 
   useEffect(() => {
     if (currentValue.length > 0) {
       if ((id === 'name' || id === 'lastName') && (currentValue.length < 2 || currentValue.length > 25)) {
         setValid(false);
         setErMessage('Имя и фамилия должны быть не менее 2 и не более 25 символов');
-        dispatch(authorizationErrorStatus(true));
       } else if (id === 'email' && !currentValue.match(regEmail)) {
         setValid(false);
         setErMessage('Некорректный формат адреса электронной почты');
-        dispatch(authorizationErrorStatus(true));
       } else {
         setValid(true);
         setErMessage('');
-        dispatch(authorizationErrorStatus(false));
       }
     } else {
       setValid(true);
       setErMessage('');
     }
   }, [currentValue]);
-
-  useEffect(() => {
-    if (currentValue.length > 1) {
-      if (!isRegistered && valid) {
-        if (id === 'name') {
-          dispatch(addFirstName(currentValue));
-        } else if (id === 'lastName') {
-          dispatch(addLastName(currentValue));
-        } else if (id === 'email') {
-          dispatch(addEmail(currentValue));
-        }
-      }
-      // if (!isAuthorized) {
-      //   if (id === 'email' && valid) {
-      //     if (currentValue === userEmail) {
-      //       dispatch(authorizationErrorStatus(false));
-      //     } else {
-      //       dispatch(authorizationErrorStatus(true));
-      //     }
-      //   }
-      // }
-    } else {
-      dispatch(authorizationErrorStatus(true));
-    }
-  }, [currentValue, valid]);
 
   return (
     <label className={style.wrapper} htmlFor={id}>
