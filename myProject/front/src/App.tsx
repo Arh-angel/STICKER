@@ -34,7 +34,7 @@ const App = () => {
         <Route path="/ads/:id" element={<AuthHOC><ProductContainer /></AuthHOC>} />
         <Route path="/ads/productEditing" element={<AuthHOC><ProductEditingContainer /></AuthHOC>} />
         <Route path="/ads/productEditing/:id" element={<AuthHOC><ProductEditingContainer /></AuthHOC>} />
-        <Route path="searchResults" element={<AuthHOC><SearchResultsContainer /></AuthHOC>} />
+        <Route path="searchResults" element={<SearchResultsContainer />} />
         <Route path="/searchResults/:id" element={<AuthHOC><ProductContainer /></AuthHOC>} />
         <Route path="reg" element={<RegistrationContainer />} />
         <Route path="auth" element={<AuthContainer />} />

@@ -21,7 +21,7 @@ const Button = (props: ButtonPropsType) => {
   const { clName, title, handler, width, height, background, textColor, fontSize, fontWeight, margin, borderRadius, icon } = props;
 
   return (
-    <button className={[style.wrapper, style.clName].join('')} type="button" style={{ width: `${width}`, height: `${height}`, background: `${background}`, color: `${textColor}`, fontSize: `${fontSize}`, fontWeight: `${fontWeight}`, margin: `${margin}`, borderRadius: `${borderRadius}` }} onClick={handler}>
+    <button className={[style.wrapper, clName].join(' ')} type="button" style={{ width: `${width}`, height: `${height}`, background: `${background}`, color: `${textColor}`, fontSize: `${fontSize}`, fontWeight: `${fontWeight}`, margin: `${margin}`, borderRadius: `${borderRadius}` }} onClick={handler}>
       {title}
       {icon}
     </button>

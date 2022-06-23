@@ -24,6 +24,15 @@ export default [
   {
     method: 'POST',
     path: '/login',
+    options: {
+      description: 'user login',
+      validate: {
+        payload: joi.object({
+          email: joi.string().required().email(),
+          password: joi.string().required().min(8),
+        }),
+      }
+    },
     handler: (req:hapi.Request, h) => {
       return userController.login(req.payload, h);
     }

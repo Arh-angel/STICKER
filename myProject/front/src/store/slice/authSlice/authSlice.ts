@@ -80,7 +80,6 @@ export const checkAuth = createAsyncThunk(
 
       localStorage.setItem('token', response.data.accessToken);
 
-      console.log(response.data.user);
       return response.data.user;
     } catch (err:any) {
       console.log(err.message);

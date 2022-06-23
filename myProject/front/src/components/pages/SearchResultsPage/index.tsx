@@ -15,193 +15,193 @@ const SearchResultsPage = (props: SearchResultsPagePropsType) => {
   const { foundAds } = props;
 
   const [ads, setAds] = useState<ISearchAds[]>([{
-    id: 'string',
+    id: '1',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '2',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '3',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '4',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '5',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '6',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '7',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '8',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '9',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '10',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '11',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '12',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '13',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '14',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '15',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '16',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '17',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '18',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '19',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '20',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '21',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '22',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '23',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '24',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '25',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '26',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '27',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '28',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '29',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '30',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '31',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
     date: 'string',
   }, {
-    id: 'string',
+    id: '32',
     userId: 'string',
     nameAd: 'string',
     description: 'string',
@@ -223,8 +223,6 @@ const SearchResultsPage = (props: SearchResultsPagePropsType) => {
     contentPerPage: 6,
     count: ads.length,
   });
-
-  console.log(gaps);
 
   useEffect(() => {
     if (page === 1) {
@@ -281,25 +279,60 @@ const SearchResultsPage = (props: SearchResultsPagePropsType) => {
             icon={<svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M6.00016 0L7.41016 1.41L2.83016 6L7.41016 10.59L6.00016 12L0.000156403 6L6.00016 0Z" fill={firstPagePag ? 'rgba(29, 29, 29, .6)' : '#1D1D1D'} />
                   </svg>} />
-          <span>{gaps.before ? '...' : null}</span>
+          {gaps.before ? <Button
+            clName={null}
+            title="..."
+            handler={() => null}
+            width={null}
+            height={null}
+            background="transparent"
+            textColor="#000000"
+            fontSize="14px"
+            fontWeight={null}
+            margin={null}
+            borderRadius="3px"
+            icon={null} /> : null}
           {/* @ts-ignore */}
-          {gaps.paginationGroup.map((el) => (
-            <Button
-              clName={`page ${page === el ? 'active' : ''}`}
-              key={el}
-              title={`${el}`}
-              handler={() => setPage(el)}
-              width={null}
-              height={null}
-              background="transparent"
-              textColor="#000000"
-              fontSize="14px"
-              fontWeight={null}
-              margin={null}
-              borderRadius="3px"
-              icon={null} />
-          ))}
-          <span>{gaps.after ? '...' : null}</span>
+          {gaps.paginationGroup.map((el) => <Button
+            clName={`${style.page} ${page === el ? style.active : ''}`}
+            key={el}
+            title={`${el}`}
+            handler={() => setPage(el)}
+            width={null}
+            height={null}
+            background="transparent"
+            textColor={null}
+            fontSize="14px"
+            fontWeight={null}
+            margin={null}
+            borderRadius="3px"
+            icon={null} />)}
+          {gaps.after ? <Button
+            clName={null}
+            title="..."
+            handler={() => null}
+            width={null}
+            height={null}
+            background="transparent"
+            textColor="#000000"
+            fontSize="14px"
+            fontWeight={null}
+            margin={null}
+            borderRadius="3px"
+            icon={null} /> : null}
+          {gaps.after ? <Button
+            clName={null}
+            title={`${totalPages}`}
+            handler={() => setPage(totalPages)}
+            width={null}
+            height={null}
+            background="transparent"
+            textColor="#000000"
+            fontSize="14px"
+            fontWeight={null}
+            margin={null}
+            borderRadius="3px"
+            icon={null} /> : null}
           {/* <p className={style.text}>
             {firstContentIndex + 1}
             <span>&mdash;</span>
