@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-indent */
-import React, { useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useAppDispatch } from '../../../../../hooks/storeHooks';
+import { addCategoryAd } from '../../../../../store/slice/adsSlice/adsSlice';
 import Button from '../../../Button';
 
 import style from './Select.module.scss';
@@ -11,7 +13,19 @@ type SelectPropsType = {
 const Select = (props: SelectPropsType) => {
   const { title } = props;
 
+  const [currentValue, setCurrentValue] = useState('Автомобили');
   const [openSelect, setOpenSelect] = useState(false);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(addCategoryAd(currentValue));
+  }, [currentValue]);
+
+  const handlerCurrentValue = (value: string) => {
+    setCurrentValue(value);
+    setOpenSelect(!openSelect);
+  };
 
   const handlerOpenSelect = () => {
     setOpenSelect(!openSelect);
@@ -22,7 +36,7 @@ const Select = (props: SelectPropsType) => {
       <p>{title}</p>
       <Button
         clName={null}
-        title="Автомобили"
+        title={currentValue}
         handler={handlerOpenSelect}
         width="100%"
         height="64px"
@@ -36,13 +50,13 @@ const Select = (props: SelectPropsType) => {
           <path d="M6 9L12 15L18 9" stroke="#2A2F37" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>} />
       {openSelect ? <ul className={style.select}>
-        <li>Автомобили</li>
-        <li>Аксессуары</li>
-        <li>Одежда</li>
-        <li>Мебель</li>
-        <li>Спорт</li>
-        <li>Техника</li>
-        <li>Товары для дома</li>
+        <li role="presentation" onClick={() => handlerCurrentValue('Автомобили')} aria-hidden="true">Автомобили</li>
+        <li role="presentation" onClick={() => handlerCurrentValue('Аксессуары')} aria-hidden="true">Аксессуары</li>
+        <li role="presentation" onClick={() => handlerCurrentValue('Одежда')} aria-hidden="true">Одежда</li>
+        <li role="presentation" onClick={() => handlerCurrentValue('Мебель')} aria-hidden="true">Мебель</li>
+        <li role="presentation" onClick={() => handlerCurrentValue('Спорт')} aria-hidden="true">Спорт</li>
+        <li role="presentation" onClick={() => handlerCurrentValue('Техника')} aria-hidden="true">Техника</li>
+        <li role="presentation" onClick={() => handlerCurrentValue('Товары для дома')} aria-hidden="true">Товары для дома</li>
                     </ul> : ''}
     </div>
   );

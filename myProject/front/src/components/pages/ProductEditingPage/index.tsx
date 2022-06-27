@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-indent */
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
-import { Radio } from 'antd';
+import { Radio, RadioChangeEvent } from 'antd';
 import AdminMenu from '../../common/AsideMenu';
 import Button from '../../common/Button';
 import Input from '../../common/Form/Input';
@@ -16,25 +16,46 @@ import InputInfo from '../../common/Form/Input/InputInfo';
 import Map from '../../common/Map';
 import Textarea from '../../common/Form/Input/Textarea';
 import { IAd } from '../../../models/IAd';
-import { useAppSelector } from '../../../hooks/storeHooks';
-import { selectUserRole } from '../../../store/slice/authSlice/authSlice';
-import { selectIdAd } from '../../../store/slice/adsSlice/adsSlice';
+import { useAppDispatch } from '../../../hooks/storeHooks';
+import { addPublishedAd } from '../../../store/slice/adsSlice/adsSlice';
 
 type ProductEditingPageProps = {
   handlerBtnBack: () => void,
-  dataAd: IAd
+  dataAd: IAd,
 };
 
 const ProductEditingPage = (props: ProductEditingPageProps) => {
   const { handlerBtnBack, dataAd } = props;
 
-  const [id, setId] = useState('');
+  const [ad, setAd] = useState<IAd>(Object);
+  const [titleBtn, setTitleBtn] = useState('Добавить');
+  const [currentRadioBtn, setCurrentRadioBtn] = useState('1');
 
-  const adId = useAppSelector(selectIdAd);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setId(adId);
-  }, [adId]);
+    setAd(dataAd);
+  }, [dataAd]);
+
+  useEffect(() => {
+    if (ad) {
+      setTitleBtn('Добавить');
+    } else {
+      setTitleBtn('Сохранить');
+    }
+  }, [ad]);
+
+  useEffect(() => {
+    if (currentRadioBtn === '1') {
+      dispatch(addPublishedAd(true));
+    } else {
+      dispatch(addPublishedAd(false));
+    }
+  }, [currentRadioBtn]);
+
+  const handlerRadioGroup = (e:RadioChangeEvent) => {
+    setCurrentRadioBtn(e.target.value);
+  };
 
   return (
     <div className={style.container}>
@@ -57,7 +78,7 @@ const ProductEditingPage = (props: ProductEditingPageProps) => {
               </svg>} />
         <div className={style.productEditingHeaderBlock}>
           <h3 className={style.productEditingHeaderBlockTitle}>{dataAd.nameAd}</h3>
-          <Button clName={null} title="Сохранить" handler={() => null} width="147px" height="40px" background="#3A95FF" textColor="#FFFFFF" fontSize="14px" fontWeight="500" margin={null} borderRadius={null} icon={null} />
+          <Button clName={null} title={titleBtn} handler={() => null} width="147px" height="40px" background="#3A95FF" textColor="#FFFFFF" fontSize="14px" fontWeight="500" margin={null} borderRadius={null} icon={null} />
         </div>
         <div className={style.productEditingBlock}>
           <InputInfo title="Название товара" id="nameProduct" placeholder="Чепчик" type="text" />
@@ -68,7 +89,7 @@ const ProductEditingPage = (props: ProductEditingPageProps) => {
             </div>
           </div>
           <div className={style.productEditingBlockDatePhone}>
-            {id ? <div className={style.productEditingBlockDate}>
+            {ad ? <div className={style.productEditingBlockDate}>
               <InputInfo title="Дата публикации" id="datePublish" placeholder="12.04.2022" type="text" />
                   </div> : ''}
             <div className={style.productEditingBlockPhone}>
@@ -84,10 +105,10 @@ const ProductEditingPage = (props: ProductEditingPageProps) => {
           </div>
           <InputInfo title="Местоположение" id="location" placeholder="Введите адрес" type="text" />
           <Map />
-          {id ? <div className={style.productEditingBlockPublication}>
+          {ad ? <div className={style.productEditingBlockPublication}>
             <p>Публикация</p>
             <div className={style.productEditingBlockPublicationBtn}>
-              <Radio.Group name="radiogroup" defaultValue={1} className={style.productEditingBlockBtn}>
+              <Radio.Group onChange={handlerRadioGroup} name="radiogroup" defaultValue={1} className={style.productEditingBlockBtn}>
                 <Radio value={1}>Показать</Radio>
                 <Radio value={2}>Скрыть</Radio>
               </Radio.Group>
