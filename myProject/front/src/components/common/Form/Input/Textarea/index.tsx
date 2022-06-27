@@ -5,11 +5,13 @@ import { addDescriptionAd } from '../../../../../store/slice/adsSlice/adsSlice';
 import style from './Textarea.module.scss';
 
 type TextareaPropsType = {
-  placeholder: string
+  placeholder: string;
+  resetSelection: boolean;
+  changeReset: () => void
 }
 
 const Textarea = (props: TextareaPropsType) => {
-  const { placeholder } = props;
+  const { placeholder, resetSelection, changeReset } = props;
 
   const [currentValue, setCurrentValue] = useState('');
   const [valid, setValid] = useState(true);
@@ -36,14 +38,21 @@ const Textarea = (props: TextareaPropsType) => {
 
   useEffect(() => {
     if (currentValue.length > 0) {
+      changeReset();
       dispatch(addDescriptionAd(currentValue));
     }
   }, [currentValue]);
 
+  useEffect(() => {
+    if (resetSelection) {
+      setCurrentValue('');
+    }
+  }, [resetSelection]);
+
   return (
     <div className={style.containerTextarea}>
       <p>Описание</p>
-      <textarea onChange={handler} name="description" id="description" placeholder={placeholder} className={!valid ? style.notValid : ''} />
+      <textarea value={currentValue} onChange={handler} name="description" id="description" placeholder={placeholder} className={!valid ? style.notValid : ''} />
       {!valid ? <span className={style.textError}>{textError}</span> : ''}
     </div>
   );

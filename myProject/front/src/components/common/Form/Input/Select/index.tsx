@@ -7,11 +7,13 @@ import Button from '../../../Button';
 import style from './Select.module.scss';
 
 type SelectPropsType = {
-  title: string
+  title: string;
+  resetSelection: boolean;
+  changeReset: () => void
 }
 
 const Select = (props: SelectPropsType) => {
-  const { title } = props;
+  const { title, resetSelection, changeReset } = props;
 
   const [currentValue, setCurrentValue] = useState('Автомобили');
   const [openSelect, setOpenSelect] = useState(false);
@@ -23,6 +25,7 @@ const Select = (props: SelectPropsType) => {
   }, [currentValue]);
 
   const handlerCurrentValue = (value: string) => {
+    changeReset();
     setCurrentValue(value);
     setOpenSelect(!openSelect);
   };
@@ -30,6 +33,12 @@ const Select = (props: SelectPropsType) => {
   const handlerOpenSelect = () => {
     setOpenSelect(!openSelect);
   };
+
+  useEffect(() => {
+    if (resetSelection) {
+      setCurrentValue('Автомобили');
+    }
+  }, [resetSelection]);
 
   return (
     <div className={style.container}>

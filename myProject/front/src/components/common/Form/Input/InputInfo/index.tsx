@@ -10,10 +10,12 @@ type InputInfoPropsType = {
   id: string;
   placeholder: string | undefined;
   type: 'text';
+  resetSelection: boolean;
+  changeReset: () => void
 };
 
 const InputInfo = ({
-  title, id, placeholder, type = 'text'
+  title, id, placeholder, type = 'text', resetSelection, changeReset
 }: InputInfoPropsType) => {
   const [currentValue, setCurrentValue] = useState('');
   const [currentInput, setCurrentInput] = useState<any>();
@@ -86,23 +88,34 @@ const InputInfo = ({
   useEffect(() => {
     if (currentValue.length > 0) {
       if (id === 'nameProduct') {
+        changeReset();
         dispatch(addNameAd(currentValue));
       } else if (id === 'priceProduct') {
+        changeReset();
         dispatch(addPriceAd(currentValue));
       } else if (id === 'datePublish') {
+        changeReset();
         dispatch(addDateAd(currentValue));
       } else if (id === 'tel') {
+        changeReset();
         dispatch(addPhoneNumberAd(currentValue));
       } else if (id === 'location') {
+        changeReset();
         dispatch(addLocationAd(currentValue));
       }
     }
   }, [currentValue]);
 
+  useEffect(() => {
+    if (resetSelection) {
+      setCurrentValue('');
+    }
+  }, [resetSelection]);
+
   return (
     <label className={style.wrapper} htmlFor={id}>
       <span>{title}</span>
-      <input ref={inputRef} id={id} type={type} placeholder={placeholder} onChange={handler} className={!valid ? style.notValid : ''} />
+      <input ref={inputRef} value={currentValue} id={id} type={type} placeholder={placeholder} onChange={handler} className={!valid ? style.notValid : ''} />
       {!valid ? <span className={style.textError}>{textError}</span> : ''}
     </label>
   );

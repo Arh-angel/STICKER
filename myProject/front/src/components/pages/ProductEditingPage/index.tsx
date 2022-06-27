@@ -17,7 +17,7 @@ import Map from '../../common/Map';
 import Textarea from '../../common/Form/Input/Textarea';
 import { IAd } from '../../../models/IAd';
 import { useAppDispatch } from '../../../hooks/storeHooks';
-import { addPublishedAd } from '../../../store/slice/adsSlice/adsSlice';
+import { addPublishedAd, clearAdState } from '../../../store/slice/adsSlice/adsSlice';
 
 type ProductEditingPageProps = {
   handlerBtnBack: () => void,
@@ -30,6 +30,7 @@ const ProductEditingPage = (props: ProductEditingPageProps) => {
   const [ad, setAd] = useState<IAd>(Object);
   const [titleBtn, setTitleBtn] = useState('Добавить');
   const [currentRadioBtn, setCurrentRadioBtn] = useState('1');
+  const [resetSelection, setResetSelection] = useState(false);
 
   const dispatch = useAppDispatch();
 
@@ -57,6 +58,15 @@ const ProductEditingPage = (props: ProductEditingPageProps) => {
     setCurrentRadioBtn(e.target.value);
   };
 
+  const handlerResetSelection = () => {
+    setResetSelection(true);
+    dispatch(clearAdState());
+  };
+
+  const handlerСhangeResetSelection = () => {
+    setResetSelection(false);
+  };
+
   return (
     <div className={style.container}>
       <AdminMenu />
@@ -81,29 +91,29 @@ const ProductEditingPage = (props: ProductEditingPageProps) => {
           <Button clName={null} title={titleBtn} handler={() => null} width="147px" height="40px" background="#3A95FF" textColor="#FFFFFF" fontSize="14px" fontWeight="500" margin={null} borderRadius={null} icon={null} />
         </div>
         <div className={style.productEditingBlock}>
-          <InputInfo title="Название товара" id="nameProduct" placeholder="Чепчик" type="text" />
+          <InputInfo title="Название товара" id="nameProduct" placeholder="Чепчик" type="text" resetSelection={resetSelection} changeReset={handlerСhangeResetSelection} />
           <div className={style.productEditingBlockSelectPrice}>
-            <Select title="Категория" />
+            <Select title="Категория" resetSelection={resetSelection} changeReset={handlerСhangeResetSelection} />
             <div className={style.productEditingBlockPrice}>
-              <InputInfo title="Стоимость" id="priceProduct" placeholder="15000" type="text" />
+              <InputInfo title="Стоимость" id="priceProduct" placeholder="15000" type="text" resetSelection={resetSelection} changeReset={handlerСhangeResetSelection} />
             </div>
           </div>
           <div className={style.productEditingBlockDatePhone}>
             {ad ? <div className={style.productEditingBlockDate}>
-              <InputInfo title="Дата публикации" id="datePublish" placeholder="12.04.2022" type="text" />
+              <InputInfo title="Дата публикации" id="datePublish" placeholder="12.04.2022" type="text" resetSelection={resetSelection} changeReset={handlerСhangeResetSelection} />
                   </div> : ''}
             <div className={style.productEditingBlockPhone}>
-              <InputInfo title="Телефон" id="tel" placeholder="+7 (_ _ _) _ _ _ - _ _ - _ _" type="text" />
+              <InputInfo title="Телефон" id="tel" placeholder="+7 (_ _ _) _ _ _ - _ _ - _ _" type="text" resetSelection={resetSelection} changeReset={handlerСhangeResetSelection} />
             </div>
           </div>
-          <Textarea placeholder="Введите текст (до 3000 символов)" />
+          <Textarea placeholder="Введите текст (до 3000 символов)" resetSelection={resetSelection} changeReset={handlerСhangeResetSelection} />
           <div className={style.productEditingBlockAddFile}>
             <p>Фотография</p>
             <div className={style.productEditingBlockAddFileWrapper}>
               <UploadInput />
             </div>
           </div>
-          <InputInfo title="Местоположение" id="location" placeholder="Введите адрес" type="text" />
+          <InputInfo title="Местоположение" id="location" placeholder="Введите адрес" type="text" resetSelection={resetSelection} changeReset={handlerСhangeResetSelection} />
           <Map />
           {ad ? <div className={style.productEditingBlockPublication}>
             <p>Публикация</p>
@@ -115,7 +125,7 @@ const ProductEditingPage = (props: ProductEditingPageProps) => {
               <Button
                 clName={null}
                 title="Сбросить выбор"
-                handler={() => null}
+                handler={handlerResetSelection}
                 width="auto"
                 height={null}
                 background="transparent"
