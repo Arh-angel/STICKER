@@ -66,7 +66,7 @@ const InputInfo = ({
       if (id === 'nameProduct' && (currentValue.length < 2 || currentValue.length > 255)) {
         setValid(false);
         setTextError('Некорректное название');
-      } else if (id === 'priceProduct' && +currentValue <= 0) {
+      } else if ((id === 'priceProduct' && +currentValue <= 0) || Number.isNaN(+currentValue)) {
         setValid(false);
         setTextError('Некорректная сумма');
       } else if (id === 'datePublish' && !currentValue.match(regDate)) {
@@ -92,7 +92,7 @@ const InputInfo = ({
         dispatch(addNameAd(currentValue));
       } else if (id === 'priceProduct') {
         changeReset();
-        dispatch(addPriceAd(currentValue));
+        dispatch(addPriceAd(+currentValue));
       } else if (id === 'datePublish') {
         changeReset();
         dispatch(addDateAd(currentValue));

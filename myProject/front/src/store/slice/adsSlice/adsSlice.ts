@@ -1,4 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { selectUserId } from '../authSlice/authSlice';
+import { useAppSelector } from '../../../hooks/storeHooks';
 import { RootState } from '../../store';
 import { IAd } from '../../../models/IAd';
 import AdsService from '../../../services/AdsService';
@@ -8,7 +10,12 @@ export const create = createAsyncThunk(
   // eslint-disable-next-line consistent-return
   async (userData: any, { rejectWithValue }) => {
     try {
-      const { userId, nameAd, category, price, phoneNumber, description, foto, location, published } = userData;
+      const userId = useAppSelector(selectUserId);
+      const { nameAd, category, price, phoneNumber, description, foto, location, published } = userData;
+
+      if (!userId || !nameAd || !category || !price || !phoneNumber || !description || !location || !published) {
+        throw new Error('Не заполнены данные об обьявлении');
+      }
 
       const response = await AdsService.createAd(userId, nameAd, category, price, phoneNumber, description, foto, location, published);
 
@@ -140,7 +147,7 @@ const initialState: AdsState = {
     userId: '',
     nameAd: '',
     category: '',
-    price: '',
+    price: 0,
     phoneNumber: '',
     description: '',
     date: '',
@@ -167,7 +174,7 @@ export const adsSlice = createSlice({
     addCategoryAd: (state, action: PayloadAction<string>) => {
       state.ad.category = action.payload;
     },
-    addPriceAd: (state, action: PayloadAction<string>) => {
+    addPriceAd: (state, action: PayloadAction<number>) => {
       state.ad.price = action.payload;
     },
     addPhoneNumberAd: (state, action: PayloadAction<string>) => {

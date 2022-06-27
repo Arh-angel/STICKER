@@ -16,8 +16,8 @@ import InputInfo from '../../common/Form/Input/InputInfo';
 import Map from '../../common/Map';
 import Textarea from '../../common/Form/Input/Textarea';
 import { IAd } from '../../../models/IAd';
-import { useAppDispatch } from '../../../hooks/storeHooks';
-import { addPublishedAd, clearAdState } from '../../../store/slice/adsSlice/adsSlice';
+import { useAppDispatch, useAppSelector } from '../../../hooks/storeHooks';
+import { addPublishedAd, change, clearAdState, create, selectAd } from '../../../store/slice/adsSlice/adsSlice';
 
 type ProductEditingPageProps = {
   handlerBtnBack: () => void,
@@ -67,6 +67,16 @@ const ProductEditingPage = (props: ProductEditingPageProps) => {
     setResetSelection(false);
   };
 
+  const handlerBtnSave = () => {
+    if (ad) {
+      if (titleBtn === 'Добавить') {
+        dispatch(create(ad));
+      } else if (titleBtn === 'Сохранить') {
+        dispatch(change(ad));
+      }
+    }
+  };
+
   return (
     <div className={style.container}>
       <AdminMenu />
@@ -88,7 +98,7 @@ const ProductEditingPage = (props: ProductEditingPageProps) => {
               </svg>} />
         <div className={style.productEditingHeaderBlock}>
           <h3 className={style.productEditingHeaderBlockTitle}>{dataAd.nameAd}</h3>
-          <Button clName={null} title={titleBtn} handler={() => null} width="147px" height="40px" background="#3A95FF" textColor="#FFFFFF" fontSize="14px" fontWeight="500" margin={null} borderRadius={null} icon={null} />
+          <Button clName={null} title={titleBtn} handler={handlerBtnSave} width="147px" height="40px" background="#3A95FF" textColor="#FFFFFF" fontSize="14px" fontWeight="500" margin={null} borderRadius={null} icon={null} />
         </div>
         <div className={style.productEditingBlock}>
           <InputInfo title="Название товара" id="nameProduct" placeholder="Чепчик" type="text" resetSelection={resetSelection} changeReset={handlerСhangeResetSelection} />

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../../hooks/storeHooks';
 import { IAd } from '../../../models/IAd';
+import { deleteAd } from '../../../store/slice/adsSlice/adsSlice';
 
 import style from './PublishMenu.module.scss';
 
@@ -9,6 +11,12 @@ type PublishMenuPropsType = {
 }
 const PublishMenu = (props: PublishMenuPropsType) => {
   const { dataAd } = props;
+
+  const dispatch = useAppDispatch();
+
+  const deleteCurrentAd = () => {
+    dispatch(deleteAd(dataAd.id));
+  };
 
   return (
     <div className={style.publishMenuContainer}>
@@ -33,7 +41,7 @@ const PublishMenu = (props: PublishMenuPropsType) => {
           </Link>
         </li>
         <li className={style.publishMenuitem}>
-          <Link to="/ads">
+          <Link to="/ads" onClick={deleteCurrentAd}>
             <span className={style.publishMenuLineActiveLink} />
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M2.5 5H4.16667H17.5" stroke="rgba(44, 45, 46, 0.08)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

@@ -3,7 +3,7 @@ export interface IAd {
   userId: string;
   nameAd: string;
   category: string;
-  price: string;
+  price: number;
   phoneNumber: string;
   description: string;
   date: string;

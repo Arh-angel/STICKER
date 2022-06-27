@@ -18,14 +18,27 @@ type AdsPropsType = {
 const AdsPage = (props: AdsPropsType) => {
   const { handlerBtn, dataAds } = props;
 
-  const [ads, setAds] = useState<IAd[]>([]);
+  const [ads, setAds] = useState<IAd[]>([{
+    id: '8',
+    userId: '654654',
+    nameAd: 'sdfaasdf',
+    category: 'sdfasf',
+    price: 0,
+    phoneNumber: '89990886545',
+    description: 'sdafasf',
+    date: '12.04.2022',
+    foto: [],
+    location: 'dsfafdasdf',
+    published: false,
+    views: 0
+  }]);
   const [openFilterMenu, setOpenFilterMenu] = useState(false);
   const [firstPagePag, setFirstPagePag] = useState(false);
   const [lastPagePag, setLastPagePag] = useState(false);
 
-  useEffect(() => {
-    setAds(dataAds);
-  }, []);
+  // useEffect(() => {
+  //   setAds(dataAds);
+  // }, [dataAds]);
 
   const {
     firstContentIndex,
