@@ -70,6 +70,11 @@ const AdsPage = (props: AdsPropsType) => {
     setOpenFilterMenu(!openFilterMenu);
   };
 
+  const handlerListFilterValue = (value:string[]) => {
+    console.log(value);
+    setAds(ads.filter((ad) => value.forEach((el) => ad.category === el)));
+  };
+
   return (
     <div className={style.container}>
       <AsideMenu />
@@ -132,7 +137,7 @@ const AdsPage = (props: AdsPropsType) => {
 <path d="M3.6001 6L20.4001 6" stroke="#2C2D2E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 <path d="M10.8 18L13.2001 18" stroke="#2C2D2E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>} />
-        {openFilterMenu ? <Filter /> : ''}
+        {openFilterMenu ? <Filter handlerListFilterValue={handlerListFilterValue} /> : ''}
         </div>
         <div className={style.pagination}>
           <p className={style.text}>

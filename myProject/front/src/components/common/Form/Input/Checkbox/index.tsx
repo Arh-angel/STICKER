@@ -7,15 +7,16 @@ import { useAppDispatch } from '../../../../../hooks/storeHooks';
 import style from './Checkbox.module.scss';
 
 type CheckboxType = {
-  text: string | null,
+  text: string,
   textLink: string | null,
   checked: boolean,
   handlerErMessage: (value:string) => void | null,
-  trackAgreement: (value:boolean) => void | null
+  trackAgreement: (value:boolean) => void | null,
+  handlerFilterValue: (value:string) => void | null
 }
 
 const Checkbox = (props: CheckboxType) => {
-  const { text, textLink, checked, handlerErMessage, trackAgreement } = props;
+  const { text, textLink, checked, handlerErMessage, trackAgreement, handlerFilterValue } = props;
   const [checkedValue, setCheckedValue] = useState(false);
   const [erMessage, setErMessage] = useState('');
 
@@ -44,6 +45,12 @@ const Checkbox = (props: CheckboxType) => {
   const handler = () => {
     setCheckedValue(!checkedValue);
   };
+
+  useEffect(() => {
+    if (checkedValue) {
+      handlerFilterValue(text);
+    }
+  }, [checkedValue]);
 
   return (
     <div className={style.wrapper}>
