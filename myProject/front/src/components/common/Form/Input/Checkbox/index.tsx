@@ -1,22 +1,24 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { checkPrime } from 'crypto';
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../../../../hooks/storeHooks';
 
 import style from './Checkbox.module.scss';
 
 type CheckboxType = {
+  id: string | null,
   text: string,
   textLink: string | null,
   checked: boolean,
   handlerErMessage: (value:string) => void | null,
   trackAgreement: (value:boolean) => void | null,
-  handlerFilterValue: (value:string) => void | null
+  handlerFilterValue: (id:string, value:string) => void | null,
+  handlerCheckedFlag: (value:boolean) => void | null
 }
 
 const Checkbox = (props: CheckboxType) => {
-  const { text, textLink, checked, handlerErMessage, trackAgreement, handlerFilterValue } = props;
+  const { id, text, textLink, checked, handlerErMessage, trackAgreement, handlerFilterValue, handlerCheckedFlag } = props;
   const [checkedValue, setCheckedValue] = useState(false);
   const [erMessage, setErMessage] = useState('');
 
@@ -28,7 +30,7 @@ const Checkbox = (props: CheckboxType) => {
 
   useEffect(() => {
     setCheckedValue(checked);
-  }, []);
+  }, [checked]);
 
   useEffect(() => {
     handlerErMessage(erMessage);
@@ -48,7 +50,22 @@ const Checkbox = (props: CheckboxType) => {
 
   useEffect(() => {
     if (checkedValue) {
-      handlerFilterValue(text);
+      if (text === 'Да') {
+        handlerCheckedFlag(true);
+      }
+      if (text === 'Нет') {
+        handlerCheckedFlag(false);
+      }
+    }
+  }, [checkedValue]);
+
+  useEffect(() => {
+    if (checkedValue) {
+      if (id === 'category') {
+        handlerFilterValue(id, text);
+      } else if (id === 'published') {
+        handlerFilterValue(id, text);
+      }
     }
   }, [checkedValue]);
 

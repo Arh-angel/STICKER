@@ -6,22 +6,49 @@ import Checkbox from '../Form/Input/Checkbox';
 import style from './Filter.module.scss';
 
 type FilterPropsTypes = {
-  handlerListFilterValue: (value: string[]) => void | null,
+  handlerListFilterValue: (value: {category:string[], published:string[]}) => void | null,
 }
 
 const Filter = (props: FilterPropsTypes) => {
   const { handlerListFilterValue } = props;
 
-  const [filterValue, setFilterValue] = useState<string[]>([]);
+  const [filterValue, setFilterValue] = useState<{category:string[], published:string[]}>({ category: [], published: [] });
+  const [categoryFilter, setCategoryFilter] = useState('');
+  const [publishedFilter, setPublishedFilter] = useState('');
   const [applyFilter, setApplyFilter] = useState(false);
+  const [checkedFlag, setCheckedFlag] = useState(true);
+
+  useEffect(() => {
+    if (categoryFilter.length > 0 && publishedFilter.length > 0) { setFilterValue({ category: [...filterValue.category, categoryFilter], published: [...filterValue.published, publishedFilter] }); }
+  }, [categoryFilter, publishedFilter]);
+
+  const handlerCheckedFlag = (value:boolean) => {
+    setCheckedFlag(value);
+  };
+
+  console.log(checkedFlag);
 
   const handlerApply = () => {
     setApplyFilter(!applyFilter);
   };
 
-  const handlerFilterValue = (value:string) => {
-    setFilterValue([...filterValue, value]);
+  const handlerFilterValue = (id:string, value:string) => {
+    if (id === 'category') {
+      const coincidence = filterValue.category.find((el) => el === value);
+      if (!coincidence) {
+        setCategoryFilter(value);
+        setFilterValue({ category: [...filterValue.category], published: [publishedFilter] });
+      }
+    } else if (id === 'published') {
+      if (value !== filterValue.published[0]) {
+        setPublishedFilter(value);
+        setFilterValue({ category: [...filterValue.category], published: [] });
+      }
+      setFilterValue({ category: [...filterValue.category], published: [] });
+    }
   };
+
+  console.log('filter value', filterValue);
 
   useEffect(() => {
     if (applyFilter) {
@@ -34,18 +61,18 @@ const Filter = (props: FilterPropsTypes) => {
       <div className={style.filterWrapperCheckbox}>
         <div className={style.filterCategory}>
           <p className={style.filterTitle}>Категория</p>
-          <Checkbox text="Автомобили" textLink={null} checked handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} />
-          <Checkbox text="Аксессуары" textLink={null} checked={false} handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} />
-          <Checkbox text="Одежда" textLink={null} checked={false} handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} />
-          <Checkbox text="Мебель" textLink={null} checked={false} handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} />
-          <Checkbox text="Спорт" textLink={null} checked={false} handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} />
-          <Checkbox text="Техника" textLink={null} checked={false} handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} />
-          <Checkbox text="Товары для дома" textLink={null} checked={false} handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} />
+          <Checkbox id="category" text="Автомобили" textLink={null} checked handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} handlerCheckedFlag={() => null} />
+          <Checkbox id="category" text="Аксессуары" textLink={null} checked={false} handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} handlerCheckedFlag={() => null} />
+          <Checkbox id="category" text="Одежда" textLink={null} checked={false} handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} handlerCheckedFlag={() => null} />
+          <Checkbox id="category" text="Мебель" textLink={null} checked={false} handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} handlerCheckedFlag={() => null} />
+          <Checkbox id="category" text="Спорт" textLink={null} checked={false} handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} handlerCheckedFlag={() => null} />
+          <Checkbox id="category" text="Техника" textLink={null} checked={false} handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} handlerCheckedFlag={() => null} />
+          <Checkbox id="category" text="Товары для дома" textLink={null} checked={false} handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} handlerCheckedFlag={() => null} />
         </div>
         <div className={style.filterPublished}>
           <p className={style.filterTitle}>Опубликовано</p>
-          <Checkbox text="Да" textLink={null} checked handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} />
-          <Checkbox text="Нет" textLink={null} checked={false} handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} />
+          <Checkbox id="published" text="Да" textLink={null} checked={!!checkedFlag} handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} handlerCheckedFlag={handlerCheckedFlag} />
+          <Checkbox id="published" text="Нет" textLink={null} checked={!checkedFlag} handlerErMessage={() => null} trackAgreement={() => null} handlerFilterValue={handlerFilterValue} handlerCheckedFlag={handlerCheckedFlag} />
         </div>
       </div>
       <div className={style.filterBtn}>

@@ -70,9 +70,9 @@ const AdsPage = (props: AdsPropsType) => {
     setOpenFilterMenu(!openFilterMenu);
   };
 
-  const handlerListFilterValue = (value:string[]) => {
+  const handlerListFilterValue = (value:{category:string[], published:string[]}) => {
     console.log(value);
-    setAds(ads.filter((ad) => value.forEach((el) => ad.category === el)));
+    setAds(ads.filter((ad) => value.category.forEach((el) => ad.category === el)));
   };
 
   return (
@@ -206,8 +206,8 @@ const AdsPage = (props: AdsPropsType) => {
           <ul className={style.productList}>
             {ads
               .slice(firstContentIndex, lastContentIndex)
-              .map((dataAd: any) => (
-                <Ads dataAd={dataAd} />
+              .map((dataAd: IAd) => (
+                <Ads key={dataAd.id} dataAd={dataAd} />
               ))}
           </ul>
         </div>
