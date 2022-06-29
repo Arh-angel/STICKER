@@ -14,11 +14,13 @@ type CheckboxType = {
   handlerErMessage: (value:string) => void | null,
   trackAgreement: (value:boolean) => void | null,
   handlerFilterValue: (id:string, value:string) => void | null,
-  handlerCheckedFlag: (value:boolean) => void | null
+  handlerCheckedFlag: (value:boolean) => void | null,
+  deletValue: (value: string) => void | null,
+  selectedFilters: {category:string[], published:string[]} | null
 }
 
 const Checkbox = (props: CheckboxType) => {
-  const { id, text, textLink, checked, handlerErMessage, trackAgreement, handlerFilterValue, handlerCheckedFlag } = props;
+  const { id, text, textLink, checked, handlerErMessage, trackAgreement, handlerFilterValue, handlerCheckedFlag, deletValue, selectedFilters } = props;
   const [checkedValue, setCheckedValue] = useState(false);
   const [erMessage, setErMessage] = useState('');
 
@@ -31,6 +33,15 @@ const Checkbox = (props: CheckboxType) => {
   useEffect(() => {
     setCheckedValue(checked);
   }, [checked]);
+
+  useEffect(() => {
+    if (selectedFilters?.category.find((el) => el === text)) {
+      setCheckedValue(true);
+    }
+    if (selectedFilters?.published.find((el) => el === text)) {
+      setCheckedValue(true);
+    }
+  }, [selectedFilters]);
 
   useEffect(() => {
     handlerErMessage(erMessage);
@@ -46,6 +57,10 @@ const Checkbox = (props: CheckboxType) => {
 
   const handler = () => {
     setCheckedValue(!checkedValue);
+
+    if (checkedValue) {
+      deletValue(text);
+    }
   };
 
   useEffect(() => {

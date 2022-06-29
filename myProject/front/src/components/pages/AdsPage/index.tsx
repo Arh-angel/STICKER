@@ -32,6 +32,7 @@ const AdsPage = (props: AdsPropsType) => {
     published: false,
     views: 0
   }]);
+  const [selectedFilters, setSelectedFilters] = useState<{category:string[], published:string[]}>({ category: ['Автомобили'], published: ['Да'] });
   const [openFilterMenu, setOpenFilterMenu] = useState(false);
   const [firstPagePag, setFirstPagePag] = useState(false);
   const [lastPagePag, setLastPagePag] = useState(false);
@@ -71,9 +72,13 @@ const AdsPage = (props: AdsPropsType) => {
   };
 
   const handlerListFilterValue = (value:{category:string[], published:string[]}) => {
-    console.log(value);
+    console.log('value', value.category);
+    setSelectedFilters(value);
+    setOpenFilterMenu(!openFilterMenu);
     setAds(ads.filter((ad) => value.category.forEach((el) => ad.category === el)));
   };
+
+  console.log(selectedFilters);
 
   return (
     <div className={style.container}>
@@ -137,7 +142,7 @@ const AdsPage = (props: AdsPropsType) => {
 <path d="M3.6001 6L20.4001 6" stroke="#2C2D2E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 <path d="M10.8 18L13.2001 18" stroke="#2C2D2E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>} />
-        {openFilterMenu ? <Filter handlerListFilterValue={handlerListFilterValue} /> : ''}
+        {openFilterMenu ? <Filter handlerListFilterValue={handlerListFilterValue} selectedFilters={selectedFilters} /> : ''}
         </div>
         <div className={style.pagination}>
           <p className={style.text}>
