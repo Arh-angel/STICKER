@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-indent */
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import usePagination from '../../../hooks/usePagination';
 
 import AsideMenu from '../../common/AsideMenu';
@@ -26,7 +26,7 @@ const AdsPage = (props: AdsPropsType) => {
     price: 0,
     phoneNumber: '89990886545',
     description: 'sdafasf',
-    date: '12.04.2022',
+    date: '12.08.2022',
     foto: [],
     location: 'dsfafdasdf',
     published: true,
@@ -40,7 +40,7 @@ const AdsPage = (props: AdsPropsType) => {
     price: 0,
     phoneNumber: '89990886545',
     description: 'sdafasf',
-    date: '12.04.2022',
+    date: '12.10.2022',
     foto: [],
     location: 'dsfafdasdf',
     published: false,
@@ -51,6 +51,7 @@ const AdsPage = (props: AdsPropsType) => {
   const [openFilterMenu, setOpenFilterMenu] = useState(false);
   const [firstPagePag, setFirstPagePag] = useState(false);
   const [lastPagePag, setLastPagePag] = useState(false);
+  const [flagSortByName, setFlagSortByName] = useState(true);
 
   // useEffect(() => {
   //   setAds(dataAds);
@@ -91,11 +92,9 @@ const AdsPage = (props: AdsPropsType) => {
   };
 
   const handlerListFilterValue = (value:{category:string[], published:string[]}) => {
-    console.log('value', value.category.length, value.published.length);
     setSelectedFilters(value);
     setOpenFilterMenu(!openFilterMenu);
     if (value.category.length > 0 && value.published.length > 0) {
-      console.log('this point', value.published, value.category);
       setFilteredAds(ads.filter((ad) => value.category.find((el) => el === ad.category) && value.published.find((el) => {
         let newEl = false;
         if (el === 'Нет') {
@@ -108,7 +107,6 @@ const AdsPage = (props: AdsPropsType) => {
         return newEl === ad.published;
       })));
     } else if (value.category.length === 0 && value.published.length > 0) {
-      console.log('this point 2', value.published, value.category);
       setFilteredAds(ads.filter((ad) => value.published.find((el) => {
         let newEl = false;
         if (el === 'Нет') {
@@ -121,15 +119,29 @@ const AdsPage = (props: AdsPropsType) => {
         return newEl === ad.published;
       })));
     } else if (value.category.length > 0 && value.published.length === 0) {
-      console.log('this point 3', value.published, value.category);
       setFilteredAds(ads.filter((ad) => value.category.find((el) => el === ad.category)));
     } else if (value.category.length === 0 && value.published.length === 0) {
-      console.log('this point 4', value.published, value.category);
       setFilteredAds(ads);
     }
   };
 
-  console.log(selectedFilters, filteredAds);
+  const handlerSortByName = () => {
+    setFlagSortByName(!flagSortByName);
+
+    if (flagSortByName) {
+      setFilteredAds(filteredAds.sort((a, b) => {
+        if (a.nameAd > b.nameAd) {
+          return 1;
+        }
+
+        return -1;
+      }));
+    }
+  };
+
+  const handlerSearchAds = (e: ChangeEvent<HTMLInputElement>) => {
+    setFilteredAds(ads.filter((ad) => ad.nameAd.toLocaleLowerCase().includes(e.target.value)));
+  };
 
   return (
     <div className={style.container}>
@@ -165,7 +177,7 @@ const AdsPage = (props: AdsPropsType) => {
         </div>
         <div className={style.searchContainer}>
         <label className={style.searchInput} htmlFor="search">
-          <input type="text" placeholder="Найти объявление" />
+          <input type="text" onChange={handlerSearchAds} placeholder="Найти объявление" />
           <span className={style.searchInputLoupe}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g opacity="0.4">
@@ -239,7 +251,7 @@ const AdsPage = (props: AdsPropsType) => {
             <Button
               clName={null}
               title="Название объявления"
-              handler={() => null}
+              handler={handlerSortByName}
               width="auto"
               height="40px"
               background="transparent"

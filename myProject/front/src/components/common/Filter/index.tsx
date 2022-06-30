@@ -57,6 +57,11 @@ const Filter = (props: FilterPropsTypes) => {
     }
   };
 
+  const handlerResetFilters = () => {
+    setFilterValue({ category: [], published: [] });
+    setApplyFilter(true);
+  };
+
   useEffect(() => {
     if (applyFilter) {
       handlerListFilterValue(filterValue);
@@ -85,7 +90,7 @@ const Filter = (props: FilterPropsTypes) => {
       </div>
       <div className={style.filterBtn}>
         <Button clName={null} title="Применить" handler={handlerApply} width="103px" height="40px" background="$sub-color-two" textColor="$second-main-color" fontSize="14px" fontWeight="500" margin="0 24px 0 0" borderRadius="4px" icon={null} />
-        <Button clName={null} title="Сбросить" handler={() => null} width="103px" height="40px" background="transparent" textColor="$sub-color-two" fontSize="14px" fontWeight="500" margin="0" borderRadius="4px" icon={null} />
+        <Button clName={null} title="Сбросить" handler={handlerResetFilters} width="103px" height="40px" background="transparent" textColor="$sub-color-two" fontSize="14px" fontWeight="500" margin="0" borderRadius="4px" icon={null} />
       </div>
     </div>
   );
