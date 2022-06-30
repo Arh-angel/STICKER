@@ -21,8 +21,22 @@ const AdsPage = (props: AdsPropsType) => {
   const [ads, setAds] = useState<IAd[]>([{
     id: '8',
     userId: '654654',
-    nameAd: 'sdfaasdf',
-    category: 'sdfasf',
+    nameAd: 'Автомобили',
+    category: 'Автомобили',
+    price: 0,
+    phoneNumber: '89990886545',
+    description: 'sdafasf',
+    date: '12.04.2022',
+    foto: [],
+    location: 'dsfafdasdf',
+    published: true,
+    views: 0
+  },
+  {
+    id: '9',
+    userId: '654654',
+    nameAd: 'Техника',
+    category: 'Техника',
     price: 0,
     phoneNumber: '89990886545',
     description: 'sdafasf',
@@ -32,6 +46,7 @@ const AdsPage = (props: AdsPropsType) => {
     published: false,
     views: 0
   }]);
+  const [filteredAds, setFilteredAds] = useState<IAd[]>([]);
   const [selectedFilters, setSelectedFilters] = useState<{category:string[], published:string[]}>({ category: ['Автомобили'], published: ['Да'] });
   const [openFilterMenu, setOpenFilterMenu] = useState(false);
   const [firstPagePag, setFirstPagePag] = useState(false);
@@ -40,6 +55,10 @@ const AdsPage = (props: AdsPropsType) => {
   // useEffect(() => {
   //   setAds(dataAds);
   // }, [dataAds]);
+
+  useEffect(() => {
+    setFilteredAds(ads.reverse());
+  }, [ads]);
 
   const {
     firstContentIndex,
@@ -72,13 +91,45 @@ const AdsPage = (props: AdsPropsType) => {
   };
 
   const handlerListFilterValue = (value:{category:string[], published:string[]}) => {
-    console.log('value', value.category);
+    console.log('value', value.category.length, value.published.length);
     setSelectedFilters(value);
     setOpenFilterMenu(!openFilterMenu);
-    setAds(ads.filter((ad) => value.category.forEach((el) => ad.category === el)));
+    if (value.category.length > 0 && value.published.length > 0) {
+      console.log('this point', value.published, value.category);
+      setFilteredAds(ads.filter((ad) => value.category.find((el) => el === ad.category) && value.published.find((el) => {
+        let newEl = false;
+        if (el === 'Нет') {
+          newEl = false;
+        }
+        if (el === 'Да') {
+          newEl = true;
+        }
+
+        return newEl === ad.published;
+      })));
+    } else if (value.category.length === 0 && value.published.length > 0) {
+      console.log('this point 2', value.published, value.category);
+      setFilteredAds(ads.filter((ad) => value.published.find((el) => {
+        let newEl = false;
+        if (el === 'Нет') {
+          newEl = false;
+        }
+        if (el === 'Да') {
+          newEl = true;
+        }
+
+        return newEl === ad.published;
+      })));
+    } else if (value.category.length > 0 && value.published.length === 0) {
+      console.log('this point 3', value.published, value.category);
+      setFilteredAds(ads.filter((ad) => value.category.find((el) => el === ad.category)));
+    } else if (value.category.length === 0 && value.published.length === 0) {
+      console.log('this point 4', value.published, value.category);
+      setFilteredAds(ads);
+    }
   };
 
-  console.log(selectedFilters);
+  console.log(selectedFilters, filteredAds);
 
   return (
     <div className={style.container}>
@@ -91,7 +142,7 @@ const AdsPage = (props: AdsPropsType) => {
               Всего:
               <span>
                 &nbsp;
-                {ads.length}
+                {filteredAds.length}
               </span>
             </p>
           </div>
@@ -209,11 +260,9 @@ const AdsPage = (props: AdsPropsType) => {
         </div>
         <div className={style.wrapperProductList}>
           <ul className={style.productList}>
-            {ads
-              .slice(firstContentIndex, lastContentIndex)
-              .map((dataAd: IAd) => (
+            {filteredAds.slice(firstContentIndex, lastContentIndex).map((dataAd: IAd) => (
                 <Ads key={dataAd.id} dataAd={dataAd} />
-              ))}
+            ))}
           </ul>
         </div>
       </div>
