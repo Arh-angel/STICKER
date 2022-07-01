@@ -1,21 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../../hooks/storeHooks';
 import { IAd } from '../../../models/IAd';
 import { deleteAd } from '../../../store/slice/adsSlice/adsSlice';
+import ModalWindow from '../ModalWindow';
 
 import style from './PublishMenu.module.scss';
 
 type PublishMenuPropsType = {
-  dataAd: IAd
+  dataAd: IAd,
+  handlerPublishMenu: () => void
 }
 const PublishMenu = (props: PublishMenuPropsType) => {
-  const { dataAd } = props;
+  const { dataAd, handlerPublishMenu } = props;
+
+  const [modalWindowOpen, setModalWindowOpen] = useState(false);
 
   const dispatch = useAppDispatch();
 
+  const changeModalWindowOpen = () => {
+    setModalWindowOpen(!modalWindowOpen);
+  };
+
   const deleteCurrentAd = () => {
+    setModalWindowOpen(true);
+  };
+
+  const handlerBtnWindowOne = () => {
     dispatch(deleteAd(dataAd.id));
+    setModalWindowOpen(false);
+    handlerPublishMenu();
+  };
+
+  const handlerBtnWindowTwo = () => {
+    setModalWindowOpen(false);
+    handlerPublishMenu();
   };
 
   return (
@@ -53,6 +72,7 @@ const PublishMenu = (props: PublishMenuPropsType) => {
           </Link>
         </li>
       </ul>
+      {modalWindowOpen ? <ModalWindow text="Точно удалить?" titleBtnOne="ДА" titleBtnTwo="НЕТ" handlerBtnOne={handlerBtnWindowOne} handlerBtnTwo={handlerBtnWindowTwo} modalWindowOpen={changeModalWindowOpen} /> : ''}
     </div>
   );
 };
