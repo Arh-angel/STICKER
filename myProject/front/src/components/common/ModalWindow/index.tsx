@@ -17,7 +17,10 @@ const ModalWindow = (props: ModalWindowPropsType) => {
 
   return (
     <div role="presentation" className={style.modalWindow} onClick={modalWindowOpen}>
-      <div className={style.container}>
+      <div
+        role="presentation"
+        className={style.container}
+        onClick={(e) => e.stopPropagation()}>
         <h3 className={style.text}>{text}</h3>
         <div className={style.wrapperBtn}>
           <Button clName={null} title={titleBtnOne} handler={handlerBtnOne} width={null} height={null} background={null} textColor={null} fontSize={null} fontWeight={null} margin={null} borderRadius={null} icon={null} />

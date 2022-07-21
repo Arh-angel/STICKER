@@ -11,12 +11,14 @@ import DropDownMenu from '../DropDownMenu';
 import { useAppDispatch, useAppSelector } from '../../../hooks/storeHooks';
 import { searchAds } from '../../../store/slice/adsSlice/adsSlice';
 import { selectUserId, selectUserRole } from '../../../store/slice/authSlice/authSlice';
+import ModalWindow from '../ModalWindow';
 
 const Header = () => {
   const [role, setRole] = useState('user');
   const [searchValue, setSearchValue] = useState('');
   const [logInLogOut, setLogInLogOut] = useState(false);
   const [path, setPath] = useState('');
+  const [modalWindowOpen, setModalWindowOpen] = useState(false);
 
   const userId = useAppSelector(selectUserId);
   const userRole = useAppSelector(selectUserRole);
@@ -52,6 +54,27 @@ const Header = () => {
     navigate('/searchResults');
   };
 
+  const OpenProductEditing = () => {
+    if (role !== 'user' && role !== 'admin') {
+      setModalWindowOpen(!modalWindowOpen);
+    } else {
+      navigate('/ads/productEditing');
+    }
+  };
+
+  const changeModalWindowOpen = () => {
+    setModalWindowOpen(!modalWindowOpen);
+  };
+
+  const handlerBtnWindowOne = () => {
+    navigate('/ads/productEditing');
+    setModalWindowOpen(!modalWindowOpen);
+  };
+
+  const handlerBtnWindowTwo = () => {
+    setModalWindowOpen(!modalWindowOpen);
+  };
+
   return (
     <header className={style.header}>
       <div className={style.container}>
@@ -84,7 +107,8 @@ const Header = () => {
           <Button clName={null} title="Искать" handler={searchResults} width="96px" height="36px" background={null} textColor={null} fontSize={null} fontWeight={null} margin={null} borderRadius="0 4px 4px 0" icon={null} />
                                           </div> : ''}
         <div className={style.wrapperBtnAccaunt}>
-          {role === 'user' || role === '' ? <Link to="/ads/productEditing" className={style.submitAdvertisement}><Button clName={null} title="Подать обьявление" handler={() => {}} width="calc(170px + (180 - 170) * ((100vw - 768px) / (1920 - 768)))" height="36px" background="#FFAC28" textColor="#1D1D1D" fontSize={null} fontWeight={null} margin={null} borderRadius={null} icon={null} /></Link> : '' }
+        <Button clName={style.submitAdvertisement} title="Подать обьявление" handler={OpenProductEditing} width="calc(170px + (180 - 170) * ((100vw - 768px) / (1920 - 768)))" height="36px" background="#FFAC28" textColor="#1D1D1D" fontSize={null} fontWeight={null} margin={null} borderRadius={null} icon={null} />
+          {modalWindowOpen ? <ModalWindow text="Для подачи объявления необходимо зарегистрироваться или авторизоваться" titleBtnOne="Ок" titleBtnTwo="Отмена" handlerBtnOne={handlerBtnWindowOne} handlerBtnTwo={handlerBtnWindowTwo} modalWindowOpen={changeModalWindowOpen} /> : ''}
           <div className={style.profileContainer}>
             {logInLogOut ? <DropDownMenu /> : <Link className={style.authLink} to={path}>Войти</Link>}
           </div>

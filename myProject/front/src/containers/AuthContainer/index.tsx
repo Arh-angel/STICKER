@@ -56,12 +56,20 @@ const AuthContainer = () => {
     setErMessage(authError);
   }, [authError]);
 
+  const handlerErMessageInInput = (value:string) => {
+    setErMessage(value);
+  };
+
   const handler = () => {
-    dispatch(login({ enteredEmail, enteredPassword }));
+    console.log(erMessage);
+
+    if (!erMessage && enteredEmail && enteredPassword) {
+      dispatch(login({ enteredEmail, enteredPassword }));
+    }
   };
 
   return (
-    <AuthPage handler={handler} trackEmail={trackEmail} trackPassword={trackPassword} erMessage={erMessage} />
+    <AuthPage handler={handler} trackEmail={trackEmail} trackPassword={trackPassword} erMessage={erMessage} handlerErMessageInInput={handlerErMessageInInput} />
   );
 };
 

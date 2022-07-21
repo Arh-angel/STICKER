@@ -7,7 +7,7 @@ import { selectUserId } from '../../store/slice/authSlice/authSlice';
 const AuthHOC: React.FC = ({ children }) => {
   const user = useAppSelector(selectUserId);
 
-  if (true) {
+  if (user) {
     return <>{children}</>;
   }
 
