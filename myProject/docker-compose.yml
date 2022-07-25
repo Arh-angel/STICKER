@@ -1,0 +1,43 @@
+version: '3.3'
+services:
+
+  api_server:
+    build: ./back
+    container_name: server
+    ports:
+      - 8888:8888
+    env_file: ./deployment/loc.env
+    volumes:
+      - .:/app
+    links:
+      - postgres_backend_api
+    depends_on:
+      - postgres_backend_api
+
+  front:
+    build: ./front
+    container_name: front_c
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    tty: true
+
+  postgres_backend_api:
+    image: postgres:14.4-alpine
+    container_name: db_postgres
+    env_file: ./deployment/loc.env
+    ports:
+      - 5433:5433
+
+  pgAdmin:
+    image: dpage/pgadmin4:4.22
+    container_name: pgAdmin
+    depends_on:
+      - postgres_backend_api
+    ports:
+      - 16555:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@mail.ru
+      PGADMIN_DEFAULT_PASSWORD: root
+    logging:
+      driver: none

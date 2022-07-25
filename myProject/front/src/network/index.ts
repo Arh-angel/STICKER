@@ -3,7 +3,7 @@ import { useAppDispatch } from '../hooks/storeHooks';
 import { AuthResponse } from '../models/response/AuthResponse';
 import { addUserId } from '../store/slice/authSlice/authSlice';
 
-export const API_URL = 'http://localhost:3001/';
+export const API_URL = 'http://localhost:8888/';
 
 const apiAxios = axios.create({
   baseURL: API_URL,

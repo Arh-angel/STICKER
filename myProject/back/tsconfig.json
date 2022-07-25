@@ -3,5 +3,6 @@
     "types": [
       "node"
     ],
+    "experimentalDecorators": true,
   },
 }
