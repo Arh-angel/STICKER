@@ -66,8 +66,8 @@ srv.register(plugins).then(() => {
       //   console.log('MongoDB connected')
       // });
 
-      // await dataSource.initialize();
-      // await dataSource.runMigrations();
+      await dataSource.initialize();
+      await dataSource.runMigrations();
 
       console.log(`server started on PORT ${process.env.PORT}`);
     } catch (e) {

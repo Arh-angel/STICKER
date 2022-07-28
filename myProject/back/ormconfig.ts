@@ -12,6 +12,6 @@ export default new DataSource({
   database: String(process.env.POSTGRES_DB),
   synchronize: false,
   cache: false,
-  entities: ['models/database/entity/**/*.ts'],
-  migrations: ['models/database/migrations/**/*.ts'],
+  entities: ['src/models/database/entity/**/*.ts'],
+  migrations: ['src/models/database/migrations/**/*.ts'],
 });
