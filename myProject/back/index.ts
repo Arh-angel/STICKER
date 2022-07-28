@@ -1,14 +1,14 @@
 import * as hapi from '@hapi/hapi';
 import * as inert from '@hapi/inert';
 import * as cookie from '@hapi/cookie';
-import * as Boom from '@hapi/boom';
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
+import dataSource from './ormconfig';
 const Jwt = require('@hapi/jwt');
 const HapiNowAuth = require('@now-ims/hapi-now-auth');
 
-import routes from './router/routes'; 
-import tokenService from './service/token-service';
+import routes from './src/router/routes'; 
+import tokenService from './src/service/token-service';
 
 dotenv.config()
 
@@ -59,12 +59,15 @@ srv.register(plugins).then(() => {
 
   srv.start().then(async () => {
     try {
-      await mongoose.connect(process.env.DB_URL, <any>{
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-      }, () => {
-        console.log('MongoDB connected')
-      });
+      // await mongoose.connect(process.env.DB_URL, <any>{
+      //   useNewUrlParser: true,
+      //   useUnifiedTopology: true
+      // }, () => {
+      //   console.log('MongoDB connected')
+      // });
+
+      // await dataSource.initialize();
+      // await dataSource.runMigrations();
 
       console.log(`server started on PORT ${process.env.PORT}`);
     } catch (e) {

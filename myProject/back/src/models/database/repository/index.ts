@@ -1,4 +1,4 @@
-import dataSourse from '../../../../../ormconfig';
+import dataSourse from '../../../../ormconfig';
 import User from '../entity/User';
 import { IUserCreateParams, IUserFindParams } from './interfaces';
 
